@@ -5,6 +5,14 @@ import { useEffect, useRef, useState } from "react";
 import { ExternalLink, Mail } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { site } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
@@ -22,10 +30,12 @@ const FADE_MS = 200;
 
 export function PortfolioContactCard() {
   const [socialHover, setSocialHover] = useState<SocialHover>(null);
+  const [isEmailDialogOpen, setIsEmailDialogOpen] = useState(false);
   const [displaySrc, setDisplaySrc] = useState(() => contactDecorSrc(null));
   const [opacity, setOpacity] = useState(1);
   const displaySrcRef = useRef(displaySrc);
   displaySrcRef.current = displaySrc;
+  const gmailComposeUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(site.email)}`;
 
   useEffect(() => {
     const next = contactDecorSrc(socialHover);
@@ -86,21 +96,21 @@ export function PortfolioContactCard() {
           </h2>
           <p className="text-lg text-muted-foreground leading-relaxed">
             Open to freelance and full-time roles. Send a short note with what
-            you&apos;re building—I&apos;ll reply within a few days.
+            you&apos;re building I&apos;ll reply within a few days.
           </p>
         </div>
         <div
           className="flex w-full flex-col gap-3 sm:max-w-md sm:flex-row sm:items-center lg:max-w-none lg:flex-col lg:items-stretch"
           onMouseLeave={() => setSocialHover(null)}
         >
-          <Button size="lg" className="rounded-full shadow-sm w-1/2" asChild>
-            <a
-              href={`mailto:${site.email}`}
-              onMouseEnter={() => setSocialHover("email")}
-            >
-              <Mail className="size-4" aria-hidden />
-              Email me
-            </a>
+          <Button
+            size="lg"
+            className="w-1/2 cursor-pointer rounded-full shadow-sm"
+            onMouseEnter={() => setSocialHover("email")}
+            onClick={() => setIsEmailDialogOpen(true)}
+          >
+            <Mail className="size-4" aria-hidden />
+            Email me
           </Button>
           <div className="flex flex-wrap gap-2">
             <Button
@@ -138,6 +148,59 @@ export function PortfolioContactCard() {
           </div>
         </div>
       </div>
+      <Dialog open={isEmailDialogOpen} onOpenChange={setIsEmailDialogOpen}>
+        <DialogContent className="fixed top-1/2 left-1/2 z-50 w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 overflow-hidden border border-border/70 bg-card/95 p-0 backdrop-blur-sm sm:max-w-md">
+          <div
+            className="pointer-events-none absolute inset-y-0 right-0 z-0 w-[62%]"
+            aria-hidden
+          >
+            <Image
+              src="/Gmail.png"
+              alt=""
+              fill
+              className="object-contain object-right opacity-[0.50]"
+              sizes="(max-width: 740px) 70vw, 18rem"
+            />
+          </div>
+          <div
+            className="pointer-events-none absolute inset-0 z-0 bg-gradient-to-r from-background/98 via-background/90 to-background/60"
+            aria-hidden
+          />
+          <div
+            className="pointer-events-none absolute inset-y-0 right-[45%] z-0 w-24 bg-gradient-to-r from-background/95 to-transparent"
+            aria-hidden
+          />
+          <DialogHeader className="relative z-10 px-6 pt-6">
+            <DialogTitle className="text-xl font-semibold tracking-tight">
+              Thanks for visiting my portfolio
+            </DialogTitle>
+            <DialogDescription className="text-[15px] leading-relaxed text-muted-foreground">
+              If you&apos;d like to connect,
+              please leave a message by email, and I&apos;ll respond as soon as
+              possible.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="relative z-10 px-6 pt-2 pb-6">
+            <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+            <Button className="sm:min-w-32" asChild>
+              <a
+                href={gmailComposeUrl}
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => setIsEmailDialogOpen(false)}
+              >
+                Open Gmail
+              </a>
+            </Button>
+            <DialogClose asChild>
+              <Button variant="outline" className="sm:min-w-24">
+                Close
+              </Button>
+            </DialogClose>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

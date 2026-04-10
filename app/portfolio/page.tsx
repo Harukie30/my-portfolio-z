@@ -1,11 +1,11 @@
 import { AbstractHeroShapes } from "@/components/abstract-hero-shapes";
 import { PortfolioAboutSection } from "@/components/portfolio-about-section";
 import { ContactConversationDecor } from "@/components/contact-conversation-decor";
+import { FooterTime } from "@/components/footer-time";
 import { PortfolioContactCard } from "@/components/portfolio-contact-card";
 import { PortfolioProjects } from "@/components/portfolio-projects";
 import { SiteHeader } from "@/components/site-header";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { site } from "@/lib/site";
 import { cn } from "@/lib/utils";
@@ -58,13 +58,19 @@ export default function PortfolioPage() {
             <div className="flex flex-col gap-8">
               <div className="flex flex-wrap items-center gap-2">
                 {site.skills.slice(0, 4).map((s) => (
-                  <Badge
+                  <span
                     key={s.name}
-                    variant="secondary"
-                    className="rounded-full border border-border/60 bg-background/60 px-3 py-0.5 font-normal backdrop-blur-sm"
+                    className="inline-flex size-11 items-center justify-center rounded-full border border-border/60 bg-background/60 p-2 shadow-sm backdrop-blur-sm dark:bg-background/50"
+                    title={s.name}
                   >
-                    {s.name}
-                  </Badge>
+                    <Image
+                      src={s.image}
+                      alt={s.name}
+                      width={28}
+                      height={28}
+                      className="size-7 object-contain"
+                    />
+                  </span>
                 ))}
               </div>
               <div className="space-y-6">
@@ -137,7 +143,7 @@ export default function PortfolioPage() {
             className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover/work:opacity-100"
             aria-hidden
           >
-            <div className="absolute -top-2 left-6 rotate-[-14deg] opacity-75 transition-transform duration-500 group-hover/work:translate-y-1">
+            <div className="absolute -top-0 left-6 rotate-[-14deg] opacity-75 transition-transform duration-500 group-hover/work:translate-y-1">
               <Image src="/Git.png" alt="" width={64} height={64} className="rounded-full" />
             </div>
             <div className="absolute top-8 right-12 rotate-[10deg] opacity-70 transition-transform duration-500 group-hover/work:-translate-y-1">
@@ -218,8 +224,8 @@ export default function PortfolioPage() {
       </main>
 
       <footer className="border-t border-border/60 bg-muted/15 py-10">
-        <div className="mx-auto grid max-w-6xl gap-6 px-4 text-center sm:px-6 lg:grid-cols-3 lg:items-center lg:text-left">
-          <div className="space-y-1">
+        <div className="grid gap-6 px-4 text-center sm:px-6 lg:grid-cols-3 lg:items-center lg:text-left">
+          <div className="space-y-1 lg:justify-self-start">
             <p className="text-sm text-muted-foreground">
               © {new Date().getFullYear()} {site.name}. All rights reserved.
             </p>
@@ -230,7 +236,7 @@ export default function PortfolioPage() {
 
           <nav
             aria-label="Footer"
-            className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm text-muted-foreground"
+            className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm text-muted-foreground lg:justify-self-center"
           >
             <a href="#work" className="transition-colors hover:text-foreground">
               Work
@@ -245,8 +251,16 @@ export default function PortfolioPage() {
               Back to top
             </a>
           </nav>
-
-          
+          <div className="flex justify-center lg:justify-self-end">
+            <div className="inline-flex items-center gap-2 rounded-full border border-border/70 bg-background/70 px-4 py-2 shadow-sm backdrop-blur-sm">
+              <span className="text-[11px] font-medium tracking-[0.18em] text-muted-foreground uppercase">
+                Local Time
+              </span>
+              <span className="font-mono text-base font-semibold text-foreground sm:text-lg">
+                <FooterTime />
+              </span>
+            </div>
+          </div>
         </div>
       </footer>
     </>
