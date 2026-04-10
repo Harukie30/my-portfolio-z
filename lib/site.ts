@@ -24,32 +24,36 @@ export const site = {
   ],
   projects: [
     {
-      title: "Design system site",
+      title: "UI Components Showcase",
       description:
-        "Documentation and live examples for a component library used across product teams.",
-      details:
-        "Led documentation IA, MDX content, and live playgrounds. Focused on accessible patterns, token naming, and adoption metrics with design and engineering.",
+        "A collection of reusable UI components built with Next.js, Tailwind CSS, and shadcn/ui, focusing on consistency and clean design.",
       href: "#",
-      /** Shown in the “Selected work” hover preview (place your own shots in /public). */
+      /** Fallback + hover peek when using carouselImages below. */
       previewImage: "/nextjs.png",
+      /**
+       * Only this project: multiple images in the modal carousel.
+       * Swap paths for your own files under /public.
+       */
+      carouselImages: [
+        "/nextjs.png",
+        "/React.png",
+        "/tailwind.png",
+        "/Typescript.png",
+      ],
       tags: ["Next.js", "Storybook"],
     },
     {
-      title: "Commerce dashboard",
+      title: "Dashboard UI",
       description:
-        "Responsive analytics UI with charts, filters, and keyboard-friendly data tables.",
-      details:
-        "Built filterable views, saved segments, and export flows. Emphasized table semantics, lazy loading, and consistent empty/loading states.",
+        "A responsive dashboard interface with tables, filters, and clean layout design, focused on usability and structured front-end development.",
       href: "#",
       previewImage: "/React.png",
       tags: ["React", "TanStack Table"],
     },
     {
-      title: "Marketing landing",
+      title: "Landing Page UI",
       description:
-        "High-conversion landing page with optimized images, SEO, and Core Web Vitals in mind.",
-      details:
-        "Structured content for SEO, image sizing and priority, and performance budgets. Collaborated on copy and conversion experiments.",
+        "HA responsive landing page designed with clean layout, optimized images, and smooth user experience using modern front-end tools.",
       href: "#",
       previewImage: "/tailwind.png",
       tags: ["Next.js", "Tailwind"],

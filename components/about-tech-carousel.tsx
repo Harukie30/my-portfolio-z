@@ -52,24 +52,17 @@ export function AboutTechCarousel({ skills }: Props) {
 
   if (reducedMotion || skills.length <= 1) {
     return (
-      <ul className="flex flex-wrap items-center justify-center gap-4 sm:justify-start">
+      <ul className="flex flex-wrap items-center justify-center gap-6 sm:justify-start sm:gap-8">
         {skills.map((skill) => (
-          <li key={skill.name}>
-            <div
-              className={cn(
-                "relative flex h-16 w-20 items-center justify-center rounded-xl border border-border/50 bg-background/60 p-2 shadow-sm",
-                "sm:h-20 sm:w-24"
-              )}
-            >
-              <Image
-                src={skill.image}
-                alt={skill.name}
-                width={80}
-                height={80}
-                className="max-h-full max-w-full object-contain"
-                unoptimized={skill.image.endsWith(".svg")}
-              />
-            </div>
+          <li key={skill.name} className="flex items-center justify-center">
+            <Image
+              src={skill.image}
+              alt={skill.name}
+              width={72}
+              height={72}
+              className="h-14 w-14 object-contain sm:h-[4.5rem] sm:w-[4.5rem]"
+              unoptimized={skill.image.endsWith(".svg")}
+            />
           </li>
         ))}
       </ul>
@@ -91,19 +84,14 @@ export function AboutTechCarousel({ skills }: Props) {
         <CarouselContent>
           {skills.map((skill, idx) => (
             <CarouselItem key={skill.name}>
-              <div className="flex justify-center px-2 py-2">
-                <div
-                  className={cn(
-                    "relative h-32 w-full max-w-[220px] rounded-2xl border border-border/50 bg-muted/25 p-4 shadow-[0_12px_36px_-16px_oklch(0_0_0/0.35)] sm:h-36 sm:max-w-[260px]",
-                    "dark:shadow-[0_12px_36px_-16px_oklch(0_0_0/0.55)]"
-                  )}
-                >
+              <div className="flex justify-center px-2 py-4">
+                <div className="relative flex h-32 w-full max-w-[200px] items-center justify-center sm:h-40 sm:max-w-[240px]">
                   <Image
                     src={skill.image}
                     alt={skill.name}
                     fill
-                    sizes="(max-width: 640px) 220px, 260px"
-                    className="object-contain p-3"
+                    sizes="(max-width: 640px) 200px, 240px"
+                    className="object-contain"
                     unoptimized={skill.image.endsWith(".svg")}
                     priority={idx === current}
                   />

@@ -84,14 +84,8 @@ export function PortfolioAboutSection() {
                 Building with clarity
               </h2>
               <p className="text-lg leading-relaxed text-slate-700">
-                I collaborate with designers and backend engineers to turn ideas
-                into production-ready UIs—semantic HTML, resilient components,
-                and interfaces that work for everyone. Update this paragraph in{" "}
-                <code className="rounded-md border border-border/60 bg-muted/50 px-1.5 py-0.5 font-mono text-xs">
-                  lib/site.ts
-                </code>{" "}
-                to tell your story.
-              </p>
+  I’m a front-end developer focused on building responsive and clean user interfaces using modern tools like Next.js, Tailwind CSS, and shadcn/ui. I enjoy turning ideas into functional UI while continuously improving my skills in design, usability, and code structure.
+</p>
             </div>
           </div>
           <Separator
@@ -104,7 +98,7 @@ export function PortfolioAboutSection() {
             onMouseEnter={() => setHover("right")}
             onMouseLeave={() => setHover(null)}
           >
-            <div className="flex flex-col justify-center gap-5 rounded-2xl border border-border/60 bg-muted/20 p-6 sm:p-8">
+            <div className="flex flex-col justify-center gap-5">
               <h3 className="text-sm font-semibold tracking-tight">
                 Stack &amp; focus
               </h3>

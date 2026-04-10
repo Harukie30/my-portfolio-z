@@ -22,10 +22,31 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 import type { ProjectEntry } from "@/lib/site";
 import { site } from "@/lib/site";
 import { cn } from "@/lib/utils";
+
+function projectHasCarousel(
+  project: ProjectEntry
+): project is ProjectEntry & { carouselImages: readonly string[] } {
+  return (
+    "carouselImages" in project &&
+    Array.isArray(project.carouselImages) &&
+    project.carouselImages.length > 0
+  );
+}
+
+function projectThumbSrc(project: ProjectEntry): string {
+  if (projectHasCarousel(project)) return project.carouselImages[0];
+  return project.previewImage;
+}
 
 function ModalSectionLabel({ children }: { children: ReactNode }) {
   return (
@@ -66,7 +87,7 @@ export function PortfolioProjects() {
             >
               <div className="relative h-44 w-36 sm:h-48">
                 <Image
-                  src={project.previewImage}
+                  src={projectThumbSrc(project)}
                   alt=""
                   fill
                   sizes="144px"
@@ -177,15 +198,52 @@ export function PortfolioProjects() {
                   </DialogDescription>
                 </div>
 
-                <div className="flex min-h-0 flex-1 flex-col px-6 pt-6 pb-2 sm:px-8">
-                  <div className="mb-3 shrink-0">
-                    <ModalSectionLabel>Case study</ModalSectionLabel>
-                  </div>
-                  <ScrollArea className="h-[min(36vh,18rem)] rounded-xl border border-border/60 bg-muted/25">
-                    <div className="p-4 text-sm leading-relaxed text-muted-foreground sm:p-5 sm:text-[0.9375rem] sm:leading-relaxed">
-                      <p className="whitespace-pre-line">{active.details}</p>
+                <div className="px-6 pt-4 pb-2 sm:px-8">
+                  {projectHasCarousel(active) ? (
+                    <div className="relative w-full">
+                      <Carousel
+                        opts={{ loop: true, align: "center" }}
+                        className="w-full"
+                        aria-label="Project screenshots"
+                      >
+                        <CarouselContent>
+                          {active.carouselImages.map((src) => (
+                            <CarouselItem key={src}>
+                              <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-border/50 bg-muted">
+                                <Image
+                                  src={src}
+                                  alt=""
+                                  fill
+                                  className="object-cover object-center"
+                                  sizes="(max-width: 768px) 100vw, 42rem"
+                                />
+                              </div>
+                            </CarouselItem>
+                          ))}
+                        </CarouselContent>
+                        <CarouselPrevious
+                          variant="outline"
+                          size="icon-sm"
+                          className="left-1 top-1/2 z-10 -translate-y-1/2 border-border/80 bg-background/90 shadow-sm"
+                        />
+                        <CarouselNext
+                          variant="outline"
+                          size="icon-sm"
+                          className="right-1 top-1/2 z-10 -translate-y-1/2 border-border/80 bg-background/90 shadow-sm"
+                        />
+                      </Carousel>
                     </div>
-                  </ScrollArea>
+                  ) : (
+                    <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-border/50 bg-muted">
+                      <Image
+                        src={active.previewImage}
+                        alt=""
+                        fill
+                        className="object-cover object-center"
+                        sizes="(max-width: 768px) 100vw, 42rem"
+                      />
+                    </div>
+                  )}
                 </div>
 
                 <DialogFooter className="mx-0 mb-0 mt-auto flex-row flex-wrap gap-2 border-t border-border/60 bg-muted/20 px-6 py-4 sm:justify-end sm:px-8">
