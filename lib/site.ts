@@ -36,9 +36,11 @@ export const site = {
        */
       carouselImages: [
         "/nextjs.png",
-        "/React.png",
-        "/tailwind.png",
-        "/Typescript.png",
+        "/UI1.png",
+        "/UI2.png",
+        "/UI3.png",
+        "/UI4.png",
+        "/UI5.png",
       ],
       tags: ["Next.js", "Storybook"],
     },

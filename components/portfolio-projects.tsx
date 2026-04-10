@@ -85,13 +85,13 @@ export function PortfolioProjects() {
                 "motion-reduce:transition-none"
               )}
             >
-              <div className="relative h-44 w-36 sm:h-48">
+              <div className="relative h-44 w-36 bg-muted/30 p-2 sm:h-48">
                 <Image
                   src={projectThumbSrc(project)}
                   alt=""
                   fill
                   sizes="144px"
-                  className="object-cover object-left"
+                  className="object-contain object-left"
                 />
               </div>
             </div>
@@ -209,12 +209,12 @@ export function PortfolioProjects() {
                         <CarouselContent>
                           {active.carouselImages.map((src) => (
                             <CarouselItem key={src}>
-                              <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-border/50 bg-muted">
+                              <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-border/50 bg-muted/40 p-4 sm:p-6">
                                 <Image
                                   src={src}
                                   alt=""
                                   fill
-                                  className="object-cover object-center"
+                                  className="object-contain object-center"
                                   sizes="(max-width: 768px) 100vw, 42rem"
                                 />
                               </div>
@@ -234,12 +234,12 @@ export function PortfolioProjects() {
                       </Carousel>
                     </div>
                   ) : (
-                    <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-border/50 bg-muted">
+                    <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-border/50 bg-muted/40 p-4 sm:p-6">
                       <Image
                         src={active.previewImage}
                         alt=""
                         fill
-                        className="object-cover object-center"
+                        className="object-contain object-center"
                         sizes="(max-width: 768px) 100vw, 42rem"
                       />
                     </div>
