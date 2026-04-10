@@ -41,8 +41,11 @@ export const site = {
         "/UI3.png",
         "/UI4.png",
         "/UI5.png",
+        "/UI6.png",
+        "/UI7.png",
+        "/UI8.png",
       ],
-      tags: ["Next.js", "Storybook"],
+      tags: ["Next.js", ],
     },
     {
       title: "Dashboard UI",
