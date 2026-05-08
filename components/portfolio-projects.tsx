@@ -159,7 +159,7 @@ export function PortfolioProjects() {
           className={cn(
             "flex max-h-[min(92vh,44rem)] w-full max-w-[calc(100%-2rem)] flex-col gap-0 overflow-hidden rounded-2xl border-0 p-0 shadow-2xl",
             "ring-1 ring-border/80 bg-popover",
-            "sm:max-w-xl md:max-w-2xl"
+            "sm:max-w-2xl md:max-w-3xl"
           )}
           showCloseButton
         >

@@ -53,7 +53,7 @@ export const site = {
       description:
         "An HR performance evaluation system with role-based views for employees, evaluators, and HR — focused on clean layouts, smooth flows, and clear feedback.",
       href: "#",
-      previewImage: "/employee-dashboard.png",
+      previewImage: "/React.png",
       carouselImages: [
         "/emppp.png",
         "/evall.png",
