@@ -26,16 +26,15 @@ export const site = {
     {
       title: "UI Components Showcase",
       description:
-        "A collection of reusable UI components built with Next.js, Tailwind CSS, and shadcn/ui, focusing on consistency and clean design.",
+        "A growing library of reusable UI patterns built with Next.js, Tailwind CSS, and shadcn/ui — focused on consistent spacing, accessible defaults, and clean composition.",
       href: "#",
       /** Fallback + hover peek when using carouselImages below. */
-      previewImage: "/nextjs.png",
+      previewImage: "/shad.png",
       /**
        * Only this project: multiple images in the modal carousel.
        * Swap paths for your own files under /public.
        */
       carouselImages: [
-        "/nextjs.png",
         "/UI1.png",
         "/UI2.png",
         "/UI3.png",
@@ -44,21 +43,28 @@ export const site = {
         "/UI6.png",
         "/UI7.png",
         "/UI8.png",
+        "/reggg.png",
+        "/modal.png",
       ],
-      tags: ["Next.js", ],
+      tags: ["Next.js", "Tailwind", "shadcn/ui"],
     },
     {
-      title: "Dashboard UI",
+      title: "Performance Evaluation Dashboard",
       description:
-        "A responsive dashboard interface with tables, filters, and clean layout design, focused on usability and structured front-end development.",
+        "An HR performance evaluation system with role-based views for employees, evaluators, and HR — focused on clean layouts, smooth flows, and clear feedback.",
       href: "#",
-      previewImage: "/React.png",
-      tags: ["React", "TanStack Table"],
+      previewImage: "/employee-dashboard.png",
+      carouselImages: [
+        "/emppp.png",
+        "/evall.png",
+        "/HR.png",
+      ],
+      tags: ["React", "Tailwind", "HR System"],
     },
     {
       title: "Landing Page UI",
       description:
-        "HA responsive landing page designed with clean layout, optimized images, and smooth user experience using modern front-end tools.",
+        "A responsive marketing landing page with a clear hero, optimized imagery, and a smooth scroll experience — built with performance and readability in mind.",
       href: "#",
       previewImage: "/tailwind.png",
       tags: ["Next.js", "Tailwind"],

@@ -44,7 +44,6 @@ function projectHasCarousel(
 }
 
 function projectThumbSrc(project: ProjectEntry): string {
-  if (projectHasCarousel(project)) return project.carouselImages[0];
   return project.previewImage;
 }
 
