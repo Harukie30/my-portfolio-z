@@ -62,23 +62,25 @@ export function PortfolioContactCard() {
 
       {/* Default colab.png; Git / LinkedIn / Gmail on hover — all at 50% opacity */}
       <div
-        className="pointer-events-none absolute bottom-2 right-2 z-[1] h-44 w-44 sm:bottom-4 sm:right-4 sm:h-52 sm:w-52 lg:bottom-5 lg:right-5 lg:h-60 lg:w-60"
+        className="pointer-events-none absolute bottom-4 right-4 z-[1] flex h-40 w-40 items-center justify-center sm:bottom-6 sm:right-6 sm:h-48 sm:w-48 lg:h-52 lg:w-52"
         aria-hidden
       >
-        <div className="relative h-full w-full opacity-50">
+        <div className="relative size-full opacity-50">
           <div
             className={cn(
-              "relative h-full w-full transition-opacity duration-200 ease-in-out",
+              "relative size-full transition-opacity duration-200 ease-in-out",
               opacity === 0 ? "opacity-0" : "opacity-100"
             )}
           >
-            <Image
-              src={displaySrc}
-              alt=""
-              fill
-              sizes="(max-width: 640px) 176px, (max-width: 1024px) 208px, 240px"
-              className="object-contain object-right object-bottom"
-            />
+            <div className="relative size-full p-3 sm:p-4">
+              <Image
+                src={displaySrc}
+                alt=""
+                fill
+                sizes="(max-width: 640px) 160px, (max-width: 1024px) 192px, 208px"
+                className="object-contain object-center"
+              />
+            </div>
           </div>
         </div>
       </div>

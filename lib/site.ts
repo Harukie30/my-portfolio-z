@@ -20,7 +20,7 @@ export const site = {
     { name: "TypeScript", image: "/Typescript.png" },
     { name: "React", image: "/React.png" },
     { name: "Tailwind CSS", image: "/tailwind.png" },
-    { name: "Accessibility", image: "/globe.svg" },
+    { name: "shadcn/ui", image: "/shad.png" },
   ],
   projects: [
     {
