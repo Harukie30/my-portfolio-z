@@ -110,7 +110,7 @@ export function PortfolioContactCard() {
             <Button
               variant="outline"
               size="lg"
-              className="flex-1 rounded-full border-border/80 bg-background/50 sm:flex-initial"
+              className="flex-1 rounded-full border-border/80 bg-background/50 hover:bg-gray-500 hover:text-white sm:flex-initial"
               asChild
             >
               <a
@@ -119,14 +119,14 @@ export function PortfolioContactCard() {
                 rel="noreferrer"
                 onMouseEnter={() => setSocialHover("github")}
               >
-                <ExternalLink className="size-4" aria-hidden />
+                <ExternalLink className="size-4 " aria-hidden />
                 GitHub
               </a>
             </Button>
             <Button
               variant="outline"
               size="lg"
-              className="flex-1 rounded-full border-border/80 bg-background/50 sm:flex-initial"
+              className="flex-1 rounded-full border-border/80 bg-background/50 hover:bg-blue-500 hover:text-white sm:flex-initial"
               asChild
             >
               <a
