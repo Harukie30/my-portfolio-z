@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { ExternalLink, Mail } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -25,33 +25,25 @@ function contactDecorSrc(hover: SocialHover) {
   return "/colab.png";
 }
 
-/** Fade-out duration before swapping src; matches transition below (0.2s). */
-const FADE_MS = 200;
+const CONTACT_DECOR_IMAGES = [
+  "/colab.png",
+  "/Gmail.png",
+  "/Git.png",
+  "/link.png",
+] as const;
 
 export function PortfolioContactCard() {
   const [socialHover, setSocialHover] = useState<SocialHover>(null);
   const [isEmailDialogOpen, setIsEmailDialogOpen] = useState(false);
-  const [displaySrc, setDisplaySrc] = useState(() => contactDecorSrc(null));
-  const [opacity, setOpacity] = useState(1);
-  const displaySrcRef = useRef(displaySrc);
-  displaySrcRef.current = displaySrc;
+  const activeDecorSrc = contactDecorSrc(socialHover);
   const gmailComposeUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(site.email)}`;
 
   useEffect(() => {
-    const next = contactDecorSrc(socialHover);
-    if (next === displaySrcRef.current) return;
-
-    setOpacity(0);
-    const t = window.setTimeout(() => {
-      setDisplaySrc(next);
-      setOpacity(0);
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => setOpacity(1));
-      });
-    }, FADE_MS);
-
-    return () => window.clearTimeout(t);
-  }, [socialHover]);
+    CONTACT_DECOR_IMAGES.forEach((src) => {
+      const img = new window.Image();
+      img.src = src;
+    });
+  }, []);
 
   return (
     <div className="relative overflow-hidden rounded-2xl border border-border/60 bg-card p-8 shadow-[0_1px_0_0_oklch(0_0_0/0.04)_inset] sm:p-12 dark:shadow-[0_1px_0_0_oklch(1_0_0/0.06)_inset]">
@@ -66,21 +58,21 @@ export function PortfolioContactCard() {
         aria-hidden
       >
         <div className="relative size-full opacity-50">
-          <div
-            className={cn(
-              "relative size-full transition-opacity duration-200 ease-in-out",
-              opacity === 0 ? "opacity-0" : "opacity-100"
-            )}
-          >
-            <div className="relative size-full p-3 sm:p-4">
+          <div className="relative size-full p-3 sm:p-4">
+            {CONTACT_DECOR_IMAGES.map((src) => (
               <Image
-                src={displaySrc}
+                key={src}
+                src={src}
                 alt=""
                 fill
                 sizes="(max-width: 640px) 160px, (max-width: 1024px) 192px, 208px"
-                className="object-contain object-center"
+                className={cn(
+                  "object-contain object-center transition-opacity duration-150 ease-out",
+                  activeDecorSrc === src ? "opacity-100" : "opacity-0"
+                )}
+                aria-hidden={activeDecorSrc !== src}
               />
-            </div>
+            ))}
           </div>
         </div>
       </div>
