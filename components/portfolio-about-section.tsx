@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import { useState } from "react";
 
 import { AboutTechCarousel } from "@/components/about-tech-carousel";
+import { SafeImage } from "@/components/safe-image";
 import { Separator } from "@/components/ui/separator";
 import { site } from "@/lib/site";
 import { cn } from "@/lib/utils";
@@ -35,9 +35,10 @@ export function PortfolioAboutSection() {
         )}
         aria-hidden
       >
-        <Image
+        <SafeImage
           src="/pops.png"
           alt=""
+          fallbackLabel="About"
           width={680}
           height={432}
           className="rounded-2xl opacity-35 blur-[1px]"
@@ -52,9 +53,10 @@ export function PortfolioAboutSection() {
         aria-hidden
       >
         <div className="relative h-full min-h-[12rem] w-full overflow-hidden rounded-2xl opacity-50">
-          <Image
+          <SafeImage
             src="/hand.jpg"
             alt=""
+            fallbackLabel="Profile"
             fill
             sizes="(max-width: 1024px) 0px, 416px"
             className="object-cover object-right"

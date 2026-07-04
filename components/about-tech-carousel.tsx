@@ -1,8 +1,8 @@
 "use client";
 
 import * as React from "react";
-import Image from "next/image";
 
+import { SafeImage } from "@/components/safe-image";
 import {
   Carousel,
   CarouselContent,
@@ -55,9 +55,10 @@ export function AboutTechCarousel({ skills }: Props) {
       <ul className="flex flex-wrap items-center justify-center gap-6 sm:justify-start sm:gap-8">
         {skills.map((skill) => (
           <li key={skill.name} className="flex items-center justify-center">
-            <Image
+            <SafeImage
               src={skill.image}
               alt={skill.name}
+              fallbackLabel={skill.name}
               width={72}
               height={72}
               className="h-14 w-14 object-contain sm:h-[4.5rem] sm:w-[4.5rem]"
@@ -86,9 +87,10 @@ export function AboutTechCarousel({ skills }: Props) {
             <CarouselItem key={skill.name}>
               <div className="flex justify-center px-2 py-4">
                 <div className="relative flex h-32 w-full max-w-[200px] items-center justify-center sm:h-40 sm:max-w-[240px]">
-                  <Image
+                  <SafeImage
                     src={skill.image}
                     alt={skill.name}
+                    fallbackLabel={skill.name}
                     fill
                     sizes="(max-width: 640px) 200px, 240px"
                     className="object-contain"

@@ -1,10 +1,10 @@
 "use client";
 
 import { useCallback, useState, type ReactNode } from "react";
-import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
+import { SafeImage } from "@/components/safe-image";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -85,9 +85,10 @@ export function PortfolioProjects() {
               )}
             >
               <div className="relative h-44 w-36 bg-muted/30 p-2 sm:h-48">
-                <Image
+                <SafeImage
                   src={projectThumbSrc(project)}
                   alt=""
+                  fallbackLabel={project.title}
                   fill
                   sizes="144px"
                   className="object-contain object-left"
@@ -209,9 +210,10 @@ export function PortfolioProjects() {
                           {active.carouselImages.map((src) => (
                             <CarouselItem key={src}>
                               <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-border/50 bg-muted/40 p-4 sm:p-6">
-                                <Image
+                                <SafeImage
                                   src={src}
                                   alt=""
+                                  fallbackLabel={active.title}
                                   fill
                                   className="object-contain object-center"
                                   sizes="(max-width: 768px) 100vw, 42rem"
@@ -234,9 +236,10 @@ export function PortfolioProjects() {
                     </div>
                   ) : (
                     <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-border/50 bg-muted/40 p-4 sm:p-6">
-                      <Image
+                      <SafeImage
                         src={active.previewImage}
                         alt=""
+                        fallbackLabel={active.title}
                         fill
                         className="object-contain object-center"
                         sizes="(max-width: 768px) 100vw, 42rem"

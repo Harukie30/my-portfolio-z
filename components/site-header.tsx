@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { MenuIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -46,7 +47,7 @@ export function SiteHeader() {
           "dark:border-border/60 dark:bg-background/70 dark:shadow-[0_1px_0_0_oklch(1_0_0/0.06)_inset,0_10px_30px_-18px_oklch(0_0_0/0.55)]"
         )}
       >
-        <a
+        <Link
           href="/"
           className="group flex items-center gap-2.5 pl-1.5 font-heading text-sm font-semibold tracking-tight sm:text-base"
         >
@@ -55,7 +56,7 @@ export function SiteHeader() {
             aria-hidden
           />
           <span className="text-foreground">{site.name}</span>
-        </a>
+        </Link>
         <nav className="hidden items-center gap-1 md:flex" aria-label="Primary">
           {nav.map((item) => (
             <Button key={item.href} variant="ghost" size="sm" asChild>

@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ExternalLink, Mail } from "lucide-react";
 
+import { SafeImage } from "@/components/safe-image";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -25,6 +25,13 @@ function contactDecorSrc(hover: SocialHover) {
   return "/colab.png";
 }
 
+function contactDecorLabel(src: string) {
+  if (src === "/Git.png") return "GitHub";
+  if (src === "/link.png") return "LinkedIn";
+  if (src === "/Gmail.png") return "Email";
+  return "Contact";
+}
+
 const CONTACT_DECOR_IMAGES = [
   "/colab.png",
   "/Gmail.png",
@@ -37,13 +44,6 @@ export function PortfolioContactCard() {
   const [isEmailDialogOpen, setIsEmailDialogOpen] = useState(false);
   const activeDecorSrc = contactDecorSrc(socialHover);
   const gmailComposeUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(site.email)}`;
-
-  useEffect(() => {
-    CONTACT_DECOR_IMAGES.forEach((src) => {
-      const img = new window.Image();
-      img.src = src;
-    });
-  }, []);
 
   return (
     <div className="relative overflow-hidden rounded-2xl border border-border/60 bg-card p-8 shadow-[0_1px_0_0_oklch(0_0_0/0.04)_inset] sm:p-12 dark:shadow-[0_1px_0_0_oklch(1_0_0/0.06)_inset]">
@@ -60,10 +60,11 @@ export function PortfolioContactCard() {
         <div className="relative size-full opacity-50">
           <div className="relative size-full p-3 sm:p-4">
             {CONTACT_DECOR_IMAGES.map((src) => (
-              <Image
+              <SafeImage
                 key={src}
                 src={src}
                 alt=""
+                fallbackLabel={contactDecorLabel(src)}
                 fill
                 sizes="(max-width: 640px) 160px, (max-width: 1024px) 192px, 208px"
                 className={cn(
@@ -148,9 +149,10 @@ export function PortfolioContactCard() {
             className="pointer-events-none absolute inset-y-0 right-0 z-0 w-[62%]"
             aria-hidden
           >
-            <Image
+            <SafeImage
               src="/Gmail.png"
               alt=""
+              fallbackLabel="Email"
               fill
               className="object-contain object-right opacity-[0.50]"
               sizes="(max-width: 740px) 70vw, 18rem"

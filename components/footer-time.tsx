@@ -19,11 +19,9 @@ export function FooterTime({ timeZone = "Asia/Manila" }: FooterTimeProps) {
     [timeZone]
   );
 
-  const [time, setTime] = useState<string | null>(null);
+  const [time, setTime] = useState(() => formatter.format(new Date()));
 
   useEffect(() => {
-    setTime(formatter.format(new Date()));
-
     const interval = window.setInterval(() => {
       setTime(formatter.format(new Date()));
     }, 1000);
@@ -31,5 +29,5 @@ export function FooterTime({ timeZone = "Asia/Manila" }: FooterTimeProps) {
     return () => window.clearInterval(interval);
   }, [formatter]);
 
-  return <span>{time ?? "--:--:--"}</span>;
+  return <span>{time}</span>;
 }

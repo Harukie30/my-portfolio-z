@@ -4,13 +4,13 @@ import { ContactConversationDecor } from "@/components/contact-conversation-deco
 import { FooterTime } from "@/components/footer-time";
 import { PortfolioContactCard } from "@/components/portfolio-contact-card";
 import { PortfolioProjects } from "@/components/portfolio-projects";
+import { SafeImage } from "@/components/safe-image";
 import { SiteHeader } from "@/components/site-header";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { site } from "@/lib/site";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
-import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "Portfolio",
@@ -63,9 +63,10 @@ export default function PortfolioPage() {
                     className="inline-flex size-11 items-center justify-center rounded-full border border-border/60 bg-background/60 p-2 shadow-sm backdrop-blur-sm dark:bg-background/50"
                     title={s.name}
                   >
-                    <Image
+                    <SafeImage
                       src={s.image}
                       alt={s.name}
+                      fallbackLabel={s.name}
                       width={28}
                       height={28}
                       className="size-7 object-contain"
@@ -144,22 +145,64 @@ export default function PortfolioPage() {
             aria-hidden
           >
             <div className="absolute -top-0 left-6 rotate-[-14deg] opacity-75 transition-transform duration-500 group-hover/work:translate-y-1">
-              <Image src="/Git.png" alt="" width={64} height={64} className="rounded-full" />
+              <SafeImage
+                src="/Git.png"
+                alt=""
+                fallbackLabel="Git"
+                width={64}
+                height={64}
+                className="rounded-full"
+              />
             </div>
             <div className="absolute top-8 right-12 rotate-[10deg] opacity-70 transition-transform duration-500 group-hover/work:-translate-y-1">
-              <Image src="/nextjs.png" alt="" width={72} height={72} className="rounded-full" />
+              <SafeImage
+                src="/nextjs.png"
+                alt=""
+                fallbackLabel="Next.js"
+                width={72}
+                height={72}
+                className="rounded-full"
+              />
             </div>
             <div className="absolute top-1/2 left-[10%] -translate-y-1/2 rotate-[-10deg] opacity-80 transition-transform duration-500 group-hover/work:-translate-x-1">
-              <Image src="/React.png" alt="" width={84} height={84} className="rounded-xl" />
+              <SafeImage
+                src="/React.png"
+                alt=""
+                fallbackLabel="React"
+                width={84}
+                height={84}
+                className="rounded-xl"
+              />
             </div>
             <div className="absolute right-[14%] bottom-6 rotate-[12deg] opacity-75 transition-transform duration-500 group-hover/work:translate-y-1">
-              <Image src="/tailwind.png" alt="" width={88} height={88} className="rounded-xl" />
+              <SafeImage
+                src="/tailwind.png"
+                alt=""
+                fallbackLabel="Tailwind CSS"
+                width={88}
+                height={88}
+                className="rounded-xl"
+              />
             </div>
             <div className="absolute bottom-8 left-[32%] rotate-[-8deg] opacity-70 transition-transform duration-500 group-hover/work:translate-x-1">
-              <Image src="/Typescript.png" alt="" width={70} height={70} className="rounded-xl" />
+              <SafeImage
+                src="/Typescript.png"
+                alt=""
+                fallbackLabel="TypeScript"
+                width={70}
+                height={70}
+                className="rounded-xl"
+              />
             </div>
             <div className="absolute top-4 left-[44%] rotate-[8deg] opacity-70 transition-transform duration-500 group-hover/work:-translate-y-1">
-              <Image src="/codeee.png" alt="" width={72} height={72} className="rounded-xl" />
+              <SafeImage
+                src="/codeee.png"
+                alt=""
+                fallbackLabel="Code"
+                width={72}
+                height={72}
+                className="rounded-xl"
+              />
             </div>
           </div>
           <div className="mx-auto max-w-6xl space-y-12 px-4 sm:px-6">
@@ -194,9 +237,10 @@ export default function PortfolioPage() {
             aria-hidden
           >
             <div className="pl-4 pt-8 sm:pl-6 sm:pt-10">
-              <Image
+              <SafeImage
                 src="/nextjs.png"
                 alt=""
+                fallbackLabel="Next.js"
                 width={112}
                 height={112}
                 className="opacity-35 blur-[0.5px]"
@@ -208,9 +252,10 @@ export default function PortfolioPage() {
             aria-hidden
           >
             <div className="pb-8 pr-4 sm:pb-10 sm:pr-6">
-              <Image
+              <SafeImage
                 src="/shad.png"
                 alt=""
+                fallbackLabel="shadcn/ui"
                 width={96}
                 height={96}
                 className="opacity-35 blur-[0.5px]"

@@ -8,11 +8,11 @@ import {
   useMemo,
   useState,
 } from "react";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 
 import { useOpenPortfolioHover } from "@/components/landing-decor-hover";
+import { SafeImage } from "@/components/safe-image";
 import { Button } from "@/components/ui/button";
 
 const DELAY_MS = 3000;
@@ -92,9 +92,10 @@ function PortfolioLoadingOverlay() {
           key={current.src}
           className="relative h-full w-full overflow-hidden rounded-2xl bg-muted/30 p-3 ring-1 ring-border/50 motion-safe:animate-pulse"
         >
-          <Image
+          <SafeImage
             src={current.src}
             alt=""
+            fallbackLabel={current.label}
             width={128}
             height={128}
             className="h-full w-full object-contain"

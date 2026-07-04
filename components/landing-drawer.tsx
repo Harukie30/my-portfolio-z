@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useState } from "react";
 import {
   ArrowRight,
@@ -11,6 +10,7 @@ import {
 } from "lucide-react";
 
 import { usePortfolioNav } from "@/components/landing-portfolio-transition";
+import { SafeImage } from "@/components/safe-image";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -33,9 +33,10 @@ function SkillBadge({ skill }: { skill: { name: string; image: string } }) {
       variant="secondary"
       className={cn("gap-1.5 pr-2.5 pl-1.5 font-normal")}
     >
-      <Image
+      <SafeImage
         src={skill.image}
         alt=""
+        fallbackLabel={skill.name}
         width={18}
         height={18}
         className="size-[18px] shrink-0 rounded-sm object-contain"

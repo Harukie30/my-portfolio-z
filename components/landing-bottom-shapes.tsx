@@ -1,7 +1,6 @@
 "use client";
 
-import Image from "next/image";
-
+import { SafeImage } from "@/components/safe-image";
 import { cn } from "@/lib/utils";
 
 /**
@@ -54,9 +53,10 @@ export function LandingBottomShapes({ visible = false }: { visible?: boolean }) 
           )}
         >
           <div className="relative h-full w-full overflow-hidden rounded-2xl ring-1 ring-border/30">
-            <Image
+            <SafeImage
               src={src}
               alt=""
+              fallbackLabel={label}
               fill
               sizes="(max-width: 768px) 160px, 220px"
               className="object-contain drop-shadow-sm"
