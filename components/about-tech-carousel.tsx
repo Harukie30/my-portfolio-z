@@ -17,7 +17,6 @@ export function AboutTechCarousel({ skills }: Props) {
   const [direction, setDirection] = React.useState<"forward" | "backward">(
     "forward"
   );
-  const [paused, setPaused] = React.useState(false);
   const previousIndex = React.useRef(0);
 
   const goTo = React.useCallback(
@@ -35,14 +34,14 @@ export function AboutTechCarousel({ skills }: Props) {
   );
 
   React.useEffect(() => {
-    if (skills.length <= 1 || paused) return;
+    if (skills.length <= 1) return;
 
     const id = window.setInterval(() => {
       goTo((previousIndex.current + 1) % skills.length);
     }, AUTOPLAY_MS);
 
     return () => window.clearInterval(id);
-  }, [goTo, paused, skills.length]);
+  }, [goTo, skills.length]);
 
   if (skills.length <= 1) {
     const skill = skills[0];
@@ -73,8 +72,6 @@ export function AboutTechCarousel({ skills }: Props) {
         role="region"
         aria-label="Tech stack carousel"
         aria-live="polite"
-        onPointerEnter={() => setPaused(true)}
-        onPointerLeave={() => setPaused(false)}
       >
         <div
           key={current}
