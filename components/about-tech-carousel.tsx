@@ -82,8 +82,8 @@ export function AboutTechCarousel({ skills }: Props) {
             "absolute inset-0 flex items-center justify-center px-2 py-4",
             "animate-in fade-in duration-500 ease-out fill-mode-both",
             direction === "forward"
-              ? "slide-in-from-right-12"
-              : "slide-in-from-left-12"
+              ? "slide-in-from-right-10"
+              : "slide-in-from-left-10"
           )}
         >
           <div className="relative h-full w-full max-w-[200px] sm:max-w-[240px]">
