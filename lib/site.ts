@@ -8,8 +8,8 @@ export const site = {
     "I build fast, accessible interfaces with React, TypeScript, and a focus on craft and performance.",
   email: "abella_hero@yahoo.com",
   location: "Philippines",
-  /** Hero avatar: put your photo at `public/portrait.jpg` (square ~800px is ideal). Use `""` for initials only. */
-  portraitImage: "/hand.jpg",
+  /** Hero avatar: put your photo in `/public` (square ~800px is ideal). Use `""` for initials only. */
+  portraitImage: "/amadeus mozart.jpg",
   social: {
     github: "https://github.com/Harukie30",
     linkedin: "https://linkedin.com",

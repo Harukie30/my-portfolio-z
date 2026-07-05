@@ -124,6 +124,7 @@ export default function PortfolioPage() {
                     <AvatarImage
                       src={site.portraitImage}
                       alt={`${site.name} — portrait`}
+                      className="object-cover object-[center_22%]"
                     />
                   ) : null}
                   <AvatarFallback className="bg-muted text-6xl font-medium text-muted-foreground sm:text-7xl">
