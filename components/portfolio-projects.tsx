@@ -57,6 +57,7 @@ function ModalSectionLabel({ children }: { children: ReactNode }) {
 
 export function PortfolioProjects() {
   const [active, setActive] = useState<ProjectEntry | null>(null);
+  const [hoveredProject, setHoveredProject] = useState<string | null>(null);
 
   const open = useCallback((project: ProjectEntry) => {
     setActive(project);
@@ -70,21 +71,31 @@ export function PortfolioProjects() {
 
   return (
     <>
-      <div className="grid gap-6 px-1 md:grid-cols-2 md:px-0 lg:grid-cols-3">
-        {site.projects.map((project) => (
+      <div className="grid gap-6 overflow-visible px-1 md:grid-cols-2 md:px-0 md:pl-40 lg:grid-cols-3">
+        {site.projects.map((project) => {
+          const isHovered = hoveredProject === project.title;
+
+          return (
           <div
             key={project.title}
-            className="group/card relative overflow-visible transition-[transform,box-shadow] hover:z-20 focus-within:z-20"
+            className="relative overflow-visible hover:z-20 focus-within:z-20"
+            onMouseEnter={() => setHoveredProject(project.title)}
+            onMouseLeave={() => setHoveredProject(null)}
+            onFocusCapture={() => setHoveredProject(project.title)}
+            onBlurCapture={(e) => {
+              if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+                setHoveredProject(null);
+              }
+            }}
           >
-            {/* Anchored to the card’s left edge, grows left — stays outside the card */}
+            {/* Preview slides out to the left of the card on hover */}
             <div
               className={cn(
-                "pointer-events-none absolute right-full top-1/2 z-10 mr-2 -translate-y-1/2 overflow-hidden rounded-xl border border-border/50 bg-muted/40 shadow-[0_18px_44px_-14px_oklch(0_0_0/0.4)] transition-[width] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] dark:shadow-[0_18px_44px_-14px_oklch(0_0_0/0.55)]",
-                "w-0 group-hover/card:w-36 group-focus-within/card:w-36",
-                "motion-reduce:transition-none"
+                "pointer-events-none absolute top-1/2 right-full z-20 mr-2 w-0 -translate-y-1/2 overflow-hidden rounded-xl border border-border/50 bg-muted/40 shadow-[0_18px_44px_-14px_oklch(0_0_0/0.4)] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] dark:shadow-[0_18px_44px_-14px_oklch(0_0_0/0.55)]",
+                isHovered && "w-36"
               )}
             >
-              <div className="relative h-44 w-36 bg-muted/30 p-2 sm:h-48">
+              <div className="relative h-44 w-36 shrink-0 bg-muted/30 p-2 sm:h-48">
                 <SafeImage
                   src={projectThumbSrc(project)}
                   alt=""
@@ -125,7 +136,12 @@ export function PortfolioProjects() {
                     </Badge>
                   ))}
                 </div>
-                <CardTitle className="text-lg transition-colors group-hover/card:text-foreground">
+                <CardTitle
+                  className={cn(
+                    "text-lg transition-colors",
+                    isHovered && "text-foreground"
+                  )}
+                >
                   {project.title}
                 </CardTitle>
                 <CardDescription className="text-base leading-relaxed">
@@ -145,14 +161,18 @@ export function PortfolioProjects() {
                 >
                   View details
                   <ArrowUpRight
-                    className="size-3.5 transition-transform group-hover/card:translate-x-0.5 group-hover/card:-translate-y-0.5"
+                    className={cn(
+                      "size-3.5 transition-transform",
+                      isHovered && "translate-x-0.5 -translate-y-0.5"
+                    )}
                     aria-hidden
                   />
                 </Button>
               </CardFooter>
             </Card>
           </div>
-        ))}
+          );
+        })}
       </div>
 
       <Dialog open={active !== null} onOpenChange={(o) => !o && close()}>

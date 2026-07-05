@@ -3,113 +3,119 @@
 import * as React from "react";
 
 import { SafeImage } from "@/components/safe-image";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  type CarouselApi,
-} from "@/components/ui/carousel";
 import type { SkillEntry } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
-const AUTOPLAY_MS = 3000;
+const AUTOPLAY_MS = 2000;
 
 type Props = {
   skills: readonly SkillEntry[];
 };
 
 export function AboutTechCarousel({ skills }: Props) {
-  const [api, setApi] = React.useState<CarouselApi | null>(null);
   const [current, setCurrent] = React.useState(0);
+  const [direction, setDirection] = React.useState<"forward" | "backward">(
+    "forward"
+  );
   const [paused, setPaused] = React.useState(false);
-  const [reducedMotion, setReducedMotion] = React.useState(false);
+  const previousIndex = React.useRef(0);
+
+  const goTo = React.useCallback(
+    (nextIndex: number) => {
+      const prevIndex = previousIndex.current;
+      const count = skills.length;
+      const forward =
+        nextIndex > prevIndex || (prevIndex === count - 1 && nextIndex === 0);
+
+      setDirection(forward ? "forward" : "backward");
+      previousIndex.current = nextIndex;
+      setCurrent(nextIndex);
+    },
+    [skills.length]
+  );
 
   React.useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setReducedMotion(mq.matches);
-    const fn = () => setReducedMotion(mq.matches);
-    mq.addEventListener("change", fn);
-    return () => mq.removeEventListener("change", fn);
-  }, []);
+    if (skills.length <= 1 || paused) return;
 
-  React.useEffect(() => {
-    if (!api) return;
-    setCurrent(api.selectedScrollSnap());
-    const onSelect = () => setCurrent(api.selectedScrollSnap());
-    api.on("select", onSelect);
-    return () => {
-      api.off("select", onSelect);
-    };
-  }, [api]);
-
-  React.useEffect(() => {
-    if (!api || reducedMotion || skills.length <= 1 || paused) return;
     const id = window.setInterval(() => {
-      api.scrollNext();
+      goTo((previousIndex.current + 1) % skills.length);
     }, AUTOPLAY_MS);
-    return () => window.clearInterval(id);
-  }, [api, reducedMotion, paused, skills.length]);
 
-  if (reducedMotion || skills.length <= 1) {
+    return () => window.clearInterval(id);
+  }, [goTo, paused, skills.length]);
+
+  if (skills.length <= 1) {
+    const skill = skills[0];
+    if (!skill) return null;
+
     return (
-      <ul className="flex flex-wrap items-center justify-center gap-6 sm:justify-start sm:gap-8">
-        {skills.map((skill) => (
-          <li key={skill.name} className="flex items-center justify-center">
-            <SafeImage
-              src={skill.image}
-              alt={skill.name}
-              fallbackLabel={skill.name}
-              width={72}
-              height={72}
-              className="h-14 w-14 object-contain sm:h-[4.5rem] sm:w-[4.5rem]"
-              unoptimized={skill.image.endsWith(".svg")}
-            />
-          </li>
-        ))}
-      </ul>
+      <div className="flex justify-center py-4">
+        <SafeImage
+          src={skill.image}
+          alt={skill.name}
+          fallbackLabel={skill.name}
+          width={72}
+          height={72}
+          className="h-14 w-14 object-contain sm:h-[4.5rem] sm:w-[4.5rem]"
+          unoptimized={skill.image.endsWith(".svg")}
+        />
+      </div>
     );
   }
 
-  return (
-    <div
-      className="w-full space-y-4"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-    >
-      <Carousel
-        setApi={setApi}
-        opts={{ loop: true, align: "center" }}
-        className="w-full"
-        aria-label="Tech stack carousel"
-      >
-        <CarouselContent>
-          {skills.map((skill, idx) => (
-            <CarouselItem key={skill.name}>
-              <div className="flex justify-center px-2 py-4">
-                <div className="relative flex h-32 w-full max-w-[200px] items-center justify-center sm:h-40 sm:max-w-[240px]">
-                  <SafeImage
-                    src={skill.image}
-                    alt={skill.name}
-                    fallbackLabel={skill.name}
-                    fill
-                    sizes="(max-width: 640px) 200px, 240px"
-                    className="object-contain"
-                    unoptimized={skill.image.endsWith(".svg")}
-                    priority={idx === current}
-                  />
-                </div>
-              </div>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-      </Carousel>
+  const activeSkill = skills[current];
+  if (!activeSkill) return null;
 
-      <p className="text-center text-sm font-medium text-foreground" aria-live="polite">
-        {skills[current]?.name}
+  return (
+    <div className="mr-auto w-full max-w-[18rem] space-y-4 sm:max-w-[20rem]">
+      <div
+        className="relative h-32 overflow-hidden sm:h-40"
+        role="region"
+        aria-label="Tech stack carousel"
+        aria-live="polite"
+        onPointerEnter={() => setPaused(true)}
+        onPointerLeave={() => setPaused(false)}
+      >
+        <div
+          key={current}
+          className={cn(
+            "absolute inset-0 flex items-center justify-center px-2 py-4",
+            "animate-in fade-in duration-500 ease-out fill-mode-both",
+            direction === "forward"
+              ? "slide-in-from-right-12"
+              : "slide-in-from-left-12"
+          )}
+        >
+          <div className="relative h-full w-full max-w-[200px] sm:max-w-[240px]">
+            <SafeImage
+              src={activeSkill.image}
+              alt={activeSkill.name}
+              fallbackLabel={activeSkill.name}
+              fill
+              sizes="(max-width: 640px) 200px, 240px"
+              className="object-contain"
+              unoptimized={activeSkill.image.endsWith(".svg")}
+              priority
+            />
+          </div>
+        </div>
+      </div>
+
+      <p
+        key={activeSkill.name}
+        className={cn(
+          "text-left text-sm font-medium text-foreground",
+          "animate-in fade-in duration-300 fill-mode-both",
+          direction === "forward"
+            ? "slide-in-from-right-4"
+            : "slide-in-from-left-4"
+        )}
+      >
+        {activeSkill.name}
       </p>
 
       <div
-        className="flex justify-center gap-1.5"
+        className="flex justify-start gap-1.5"
         role="tablist"
         aria-label="Tech stack slides"
       >
@@ -122,12 +128,12 @@ export function AboutTechCarousel({ skills }: Props) {
             tabIndex={i === current ? 0 : -1}
             aria-label={`Show ${skill.name}`}
             className={cn(
-              "size-2 rounded-full transition-colors",
+              "size-2 rounded-full transition-all duration-300",
               i === current
-                ? "bg-primary"
+                ? "w-5 bg-primary"
                 : "bg-muted-foreground/25 hover:bg-muted-foreground/45"
             )}
-            onClick={() => api?.scrollTo(i)}
+            onClick={() => goTo(i)}
           />
         ))}
       </div>

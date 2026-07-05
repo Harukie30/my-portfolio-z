@@ -137,11 +137,11 @@ export default function PortfolioPage() {
 
         <section
           id="work"
-          className="group/work relative scroll-mt-28 overflow-hidden border-b border-border/60 py-20 sm:py-28"
+          className="group/work relative scroll-mt-28 overflow-visible border-b border-border/60 py-20 sm:py-28"
           aria-labelledby="work-heading"
         >
           <div
-            className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover/work:opacity-100"
+            className="pointer-events-none absolute inset-0 z-0 overflow-hidden opacity-0 transition-opacity duration-300 group-hover/work:opacity-100"
             aria-hidden
           >
             <div className="absolute -top-0 left-6 rotate-[-14deg] opacity-75 transition-transform duration-500 group-hover/work:translate-y-1">
@@ -205,7 +205,7 @@ export default function PortfolioPage() {
               />
             </div>
           </div>
-          <div className="mx-auto max-w-6xl space-y-12 px-4 sm:px-6">
+          <div className="relative z-10 mx-auto max-w-6xl space-y-12 px-4 sm:px-6">
             <div className="max-w-2xl space-y-4">
               <SectionLabel>Portfolio</SectionLabel>
               <h2

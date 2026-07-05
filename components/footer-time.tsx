@@ -19,15 +19,18 @@ export function FooterTime({ timeZone = "Asia/Manila" }: FooterTimeProps) {
     [timeZone]
   );
 
-  const [time, setTime] = useState(() => formatter.format(new Date()));
+  const [time, setTime] = useState<string | null>(null);
 
   useEffect(() => {
-    const interval = window.setInterval(() => {
-      setTime(formatter.format(new Date()));
-    }, 1000);
+    const update = () => setTime(formatter.format(new Date()));
+    const timeout = window.setTimeout(update, 0);
+    const interval = window.setInterval(update, 1000);
 
-    return () => window.clearInterval(interval);
+    return () => {
+      window.clearTimeout(timeout);
+      window.clearInterval(interval);
+    };
   }, [formatter]);
 
-  return <span>{time}</span>;
+  return <span suppressHydrationWarning>{time ?? "--:--:--"}</span>;
 }

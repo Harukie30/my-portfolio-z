@@ -23,22 +23,30 @@ const nav = [
 
 export function SiteHeader() {
   const [hidden, setHidden] = useState(false);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     const onScroll = () => {
       setHidden(window.scrollY > 8);
     };
 
-    onScroll();
+    const timeout = window.setTimeout(() => {
+      onScroll();
+      setReady(true);
+    }, 0);
+
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      window.clearTimeout(timeout);
+      window.removeEventListener("scroll", onScroll);
+    };
   }, []);
 
   return (
     <header
       className={cn(
         "sticky top-0 z-50 px-4 pt-4 pb-2 transition-transform duration-300 sm:px-6",
-        hidden ? "-translate-y-[120%]" : "translate-y-0"
+        ready && hidden ? "-translate-y-[120%]" : "translate-y-0"
       )}
     >
       <div
