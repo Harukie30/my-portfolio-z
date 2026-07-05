@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import Link from "next/link";
 import { MenuIcon } from "lucide-react";
 
@@ -21,32 +21,32 @@ const nav = [
   { href: "#contact", label: "Contact" },
 ] as const;
 
+function subscribeToScroll(onStoreChange: () => void) {
+  window.addEventListener("scroll", onStoreChange, { passive: true });
+  return () => window.removeEventListener("scroll", onStoreChange);
+}
+
+function getScrollY() {
+  return window.scrollY;
+}
+
+function getServerScrollY() {
+  return 0;
+}
+
 export function SiteHeader() {
-  const [hidden, setHidden] = useState(false);
-  const [ready, setReady] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => {
-      setHidden(window.scrollY > 8);
-    };
-
-    const timeout = window.setTimeout(() => {
-      onScroll();
-      setReady(true);
-    }, 0);
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => {
-      window.clearTimeout(timeout);
-      window.removeEventListener("scroll", onScroll);
-    };
-  }, []);
+  const scrollY = useSyncExternalStore(
+    subscribeToScroll,
+    getScrollY,
+    getServerScrollY
+  );
+  const hidden = scrollY > 8;
 
   return (
     <header
       className={cn(
         "sticky top-0 z-50 px-4 pt-4 pb-2 transition-transform duration-300 sm:px-6",
-        ready && hidden ? "-translate-y-[120%]" : "translate-y-0"
+        hidden ? "-translate-y-[120%]" : "translate-y-0"
       )}
     >
       <div
@@ -67,14 +67,13 @@ export function SiteHeader() {
         </Link>
         <nav className="hidden items-center gap-1 md:flex" aria-label="Primary">
           {nav.map((item) => (
-            <Button key={item.href} variant="ghost" size="sm" asChild>
-              <a
-                href={item.href}
-                className="rounded-full px-4 text-muted-foreground transition-colors hover:bg-muted/70 hover:text-foreground"
-              >
-                {item.label}
-              </a>
-            </Button>
+            <a
+              key={item.href}
+              href={item.href}
+              className="inline-flex h-8 items-center justify-center rounded-full px-4 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted/70 hover:text-foreground"
+            >
+              {item.label}
+            </a>
           ))}
         </nav>
         <div className="flex items-center md:hidden">

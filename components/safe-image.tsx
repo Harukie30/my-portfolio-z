@@ -77,12 +77,19 @@ export function SafeImage({
     );
   }
 
+  const hasFixedDimensions =
+    props.width != null && props.height != null && !props.fill;
+
   return (
     <Image
       {...props}
       src={src}
       alt={alt}
       className={className}
+      style={{
+        ...props.style,
+        ...(hasFixedDimensions ? { width: "auto", height: "auto" } : {}),
+      }}
       onError={(event) => {
         setFailed(true);
         onError?.(event);
