@@ -52,13 +52,13 @@ export function PortfolioContactCard() {
         aria-hidden
       />
 
-      {/* Default colab.png; Git / LinkedIn / Gmail on hover — all at 50% opacity */}
+      {/* Decor icon: top-right on mobile (clear of buttons), bottom-right on sm+ */}
       <div
-        className="pointer-events-none absolute bottom-4 right-4 z-[1] flex h-40 w-40 items-center justify-center sm:bottom-6 sm:right-6 sm:h-48 sm:w-48 lg:h-52 lg:w-52"
+        className="pointer-events-none absolute top-4 right-4 z-[1] flex h-16 w-16 items-center justify-center sm:top-auto sm:bottom-6 sm:right-6 sm:h-48 sm:w-48 lg:h-52 lg:w-52"
         aria-hidden
       >
-        <div className="relative size-full opacity-50">
-          <div className="relative size-full p-3 sm:p-4">
+        <div className="relative size-full opacity-45 sm:opacity-50">
+          <div className="relative size-full p-1.5 sm:p-4">
             {CONTACT_DECOR_IMAGES.map((src) => (
               <SafeImage
                 key={src}
@@ -66,7 +66,7 @@ export function PortfolioContactCard() {
                 alt=""
                 fallbackLabel={contactDecorLabel(src)}
                 fill
-                sizes="(max-width: 640px) 160px, (max-width: 1024px) 192px, 208px"
+                sizes="(max-width: 640px) 64px, (max-width: 1024px) 192px, 208px"
                 className={cn(
                   "object-contain object-center transition-opacity duration-150 ease-out",
                   activeDecorSrc === src ? "opacity-100" : "opacity-0"
@@ -79,7 +79,7 @@ export function PortfolioContactCard() {
       </div>
 
       <div className="relative z-10 flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between">
-        <div className="max-w-xl space-y-4">
+        <div className="max-w-xl space-y-4 pr-16 sm:pr-0">
           <p className="font-mono text-[11px] font-medium tracking-[0.2em] text-muted-foreground uppercase">
             Contact
           </p>
@@ -97,11 +97,13 @@ export function PortfolioContactCard() {
         <div
           className="flex w-full flex-col gap-3 sm:max-w-md sm:flex-row sm:items-center lg:max-w-none lg:flex-col lg:items-stretch"
           onMouseLeave={() => setSocialHover(null)}
+          onPointerLeave={() => setSocialHover(null)}
         >
           <Button
             size="lg"
-            className="w-1/2 cursor-pointer rounded-full shadow-sm"
+            className="w-full cursor-pointer rounded-full shadow-sm sm:w-1/2"
             onMouseEnter={() => setSocialHover("email")}
+            onPointerDown={() => setSocialHover("email")}
             onClick={() => setIsEmailDialogOpen(true)}
           >
             <Mail className="size-4" aria-hidden />
@@ -119,6 +121,7 @@ export function PortfolioContactCard() {
                 target="_blank"
                 rel="noreferrer"
                 onMouseEnter={() => setSocialHover("github")}
+                onPointerDown={() => setSocialHover("github")}
               >
                 <ExternalLink className="size-4 " aria-hidden />
                 GitHub
@@ -135,6 +138,7 @@ export function PortfolioContactCard() {
                 target="_blank"
                 rel="noreferrer"
                 onMouseEnter={() => setSocialHover("linkedin")}
+                onPointerDown={() => setSocialHover("linkedin")}
               >
                 <ExternalLink className="size-4" aria-hidden />
                 LinkedIn
@@ -166,7 +170,7 @@ export function PortfolioContactCard() {
             className="pointer-events-none absolute inset-y-0 right-[45%] z-0 w-24 bg-gradient-to-r from-background/95 to-transparent"
             aria-hidden
           />
-          <DialogHeader className="relative z-10 px-6 pt-6">
+          <DialogHeader className="relative z-10 px-6 pt-6 pr-12">
             <DialogTitle className="text-xl font-semibold tracking-tight">
               Thanks for visiting my portfolio
             </DialogTitle>
@@ -189,7 +193,12 @@ export function PortfolioContactCard() {
               </a>
             </Button>
             <DialogClose asChild>
-              <Button variant="outline" className="sm:min-w-24">
+              <Button
+                type="button"
+                variant="outline"
+                className="sm:min-w-24"
+                onClick={() => setIsEmailDialogOpen(false)}
+              >
                 Close
               </Button>
             </DialogClose>

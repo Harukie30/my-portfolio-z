@@ -6,7 +6,7 @@ export const site = {
   role: "Frontend Developer",
   tagline:
     "I build fast, accessible interfaces with React, TypeScript, and a focus on craft and performance.",
-  email: "abella_hero@yahoo.com",
+  email: "amadeusmozartlabao@gmail.com",
   location: "Philippines",
   /** Hero avatar: put your photo in `/public` (square ~800px is ideal). Use `""` for initials only. */
   portraitImage: "/amadeus mozart.jpg",

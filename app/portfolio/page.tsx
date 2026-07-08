@@ -6,11 +6,13 @@ import { PortfolioContactCard } from "@/components/portfolio-contact-card";
 import { PortfolioProjects } from "@/components/portfolio-projects";
 import { SafeImage } from "@/components/safe-image";
 import { SiteHeader } from "@/components/site-header";
+import { WorkDecor } from "@/components/work-decor";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { site } from "@/lib/site";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "Portfolio",
@@ -54,13 +56,13 @@ export default function PortfolioPage() {
           />
           <AbstractHeroShapes />
 
-          <div className="mx-auto grid max-w-6xl gap-12 px-4 py-20 sm:gap-16 sm:px-6 sm:py-28 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:items-center lg:gap-20 lg:py-32">
-            <div className="flex flex-col gap-8">
+          <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:gap-16 sm:px-6 sm:py-28 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:items-center lg:gap-20 lg:py-32">
+            <div className="flex flex-col gap-6 sm:gap-8">
               <div className="flex flex-wrap items-center gap-2">
                 {site.skills.slice(0, 4).map((s) => (
                   <span
                     key={s.name}
-                    className="inline-flex size-11 items-center justify-center rounded-full border border-border/60 bg-background/60 p-2 shadow-sm backdrop-blur-sm dark:bg-background/50"
+                    className="inline-flex size-10 items-center justify-center rounded-full border border-border/60 bg-background/60 p-2 shadow-sm backdrop-blur-sm sm:size-11 dark:bg-background/50"
                     title={s.name}
                   >
                     <SafeImage
@@ -69,12 +71,12 @@ export default function PortfolioPage() {
                       fallbackLabel={s.name}
                       width={28}
                       height={28}
-                      className="size-7 object-contain"
+                      className="size-6 object-contain sm:size-7"
                     />
                   </span>
                 ))}
               </div>
-              <div className="space-y-6">
+              <div className="space-y-5 sm:space-y-6">
                 <div className="space-y-2">
                   <SectionLabel>Available for work</SectionLabel>
                   <p className="text-sm font-medium text-muted-foreground">
@@ -83,24 +85,24 @@ export default function PortfolioPage() {
                 </div>
                 <h1
                   id="hero-heading"
-                  className="font-heading text-4xl leading-[1.08] font-semibold tracking-tight text-balance sm:text-5xl lg:text-6xl"
+                  className="font-heading text-3xl leading-[1.08] font-semibold tracking-tight text-balance sm:text-5xl lg:text-6xl"
                 >
                   Hi, I&apos;m {site.name.split(" ")[0]}.{" "}
                   <span className="text-gradient">I ship interfaces</span>{" "}
                   people enjoy using.
                 </h1>
-                <p className="max-w-xl text-lg text-muted-foreground leading-relaxed md:text-xl">
+                <p className="max-w-xl text-base text-muted-foreground leading-relaxed sm:text-lg md:text-xl">
                   {site.tagline}
                 </p>
               </div>
-              <div className="flex flex-wrap gap-3">
-                <Button size="lg" className="rounded-full px-7 shadow-sm" asChild>
+              <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                <Button size="lg" className="w-full rounded-full px-7 shadow-sm sm:w-auto" asChild>
                   <a href="#work">View work</a>
                 </Button>
                 <Button
                   size="lg"
                   variant="outline"
-                  className="rounded-full border-border/80 bg-background/50 px-7 backdrop-blur-sm"
+                  className="w-full rounded-full border-border/80 bg-background/50 px-7 backdrop-blur-sm sm:w-auto"
                   asChild
                 >
                   <a href="#contact">Get in touch</a>
@@ -118,7 +120,7 @@ export default function PortfolioPage() {
               >
                 <Avatar
                   size="lg"
-                  className="!size-64 border-[6px] border-background bg-muted sm:!size-80 lg:!size-96"
+                  className="!size-52 border-[6px] border-background bg-muted sm:!size-80 lg:!size-96"
                 >
                   {site.portraitImage ? (
                     <AvatarImage
@@ -138,86 +140,22 @@ export default function PortfolioPage() {
 
         <section
           id="work"
-          className="group/work relative scroll-mt-28 overflow-visible border-b border-border/60 py-20 sm:py-28"
+          className="group/work relative scroll-mt-28 overflow-visible border-b border-border/60 py-14 sm:py-20 lg:py-28"
           aria-labelledby="work-heading"
         >
-          <div
-            className="pointer-events-none absolute inset-0 z-0 overflow-hidden opacity-0 transition-opacity duration-300 group-hover/work:opacity-100"
-            aria-hidden
-          >
-            <div className="absolute -top-0 left-6 rotate-[-14deg] opacity-75 transition-transform duration-500 group-hover/work:translate-y-1">
-              <SafeImage
-                src="/Git.png"
-                alt=""
-                fallbackLabel="Git"
-                width={64}
-                height={64}
-                className="rounded-full"
-              />
-            </div>
-            <div className="absolute top-8 right-12 rotate-[10deg] opacity-70 transition-transform duration-500 group-hover/work:-translate-y-1">
-              <SafeImage
-                src="/nextjs.png"
-                alt=""
-                fallbackLabel="Next.js"
-                width={72}
-                height={72}
-                className="rounded-full"
-              />
-            </div>
-            <div className="absolute top-1/2 left-[10%] -translate-y-1/2 rotate-[-10deg] opacity-80 transition-transform duration-500 group-hover/work:-translate-x-1">
-              <SafeImage
-                src="/React.png"
-                alt=""
-                fallbackLabel="React"
-                width={84}
-                height={84}
-                className="rounded-xl"
-              />
-            </div>
-            <div className="absolute right-[14%] bottom-6 rotate-[12deg] opacity-75 transition-transform duration-500 group-hover/work:translate-y-1">
-              <SafeImage
-                src="/tailwind.png"
-                alt=""
-                fallbackLabel="Tailwind CSS"
-                width={88}
-                height={88}
-                className="rounded-xl"
-              />
-            </div>
-            <div className="absolute bottom-8 left-[32%] rotate-[-8deg] opacity-70 transition-transform duration-500 group-hover/work:translate-x-1">
-              <SafeImage
-                src="/Typescript.png"
-                alt=""
-                fallbackLabel="TypeScript"
-                width={70}
-                height={70}
-                className="rounded-xl"
-              />
-            </div>
-            <div className="absolute top-4 left-[44%] rotate-[8deg] opacity-70 transition-transform duration-500 group-hover/work:-translate-y-1">
-              <SafeImage
-                src="/codeee.png"
-                alt=""
-                fallbackLabel="Code"
-                width={72}
-                height={72}
-                className="rounded-xl"
-              />
-            </div>
-          </div>
-          <div className="relative z-10 mx-auto max-w-6xl space-y-12 px-4 sm:px-6">
-            <div className="max-w-2xl space-y-4">
+          <WorkDecor />
+          <div className="relative z-10 mx-auto max-w-6xl space-y-8 px-4 sm:space-y-12 sm:px-6">
+            <div className="max-w-2xl space-y-3 sm:space-y-4">
               <SectionLabel>Portfolio</SectionLabel>
               <h2
                 id="work-heading"
-                className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl"
+                className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl lg:text-4xl"
               >
                 Selected work
               </h2>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-              A collection of front-end projects built with Next.js, Tailwind CSS, and shadcn/ui
-               focused on responsive design, clean user experience, and maintainable modern code.
+              <p className="text-base text-muted-foreground leading-relaxed sm:text-lg">
+                A collection of front-end projects built with Next.js, Tailwind CSS, and shadcn/ui
+                focused on responsive design, clean user experience, and maintainable modern code.
               </p>
             </div>
             <PortfolioProjects />
@@ -228,38 +166,38 @@ export default function PortfolioPage() {
 
         <section
           id="contact"
-          className="group/contact-card relative scroll-mt-28 overflow-visible py-20 sm:py-28"
+          className="group/contact-card relative scroll-mt-28 overflow-visible py-14 sm:py-20 lg:py-28"
           aria-labelledby="contact-heading"
         >
           <ContactConversationDecor />
-          {/* Section background edges — behind the card; hover the contact card to reveal */}
+          {/* Section background edges — soft on mobile, full on hover */}
           <div
-            className="pointer-events-none absolute left-0 top-0 z-0 opacity-0 transition-opacity duration-200 group-hover/contact-card:opacity-100"
+            className="pointer-events-none absolute left-0 top-0 z-0 opacity-25 transition-opacity duration-200 group-hover/contact-card:opacity-100 group-focus-within/contact-card:opacity-100"
             aria-hidden
           >
-            <div className="pl-4 pt-8 sm:pl-6 sm:pt-10">
+            <div className="pl-3 pt-6 sm:pl-6 sm:pt-10">
               <SafeImage
                 src="/nextjs.png"
                 alt=""
                 fallbackLabel="Next.js"
-                width={112}
-                height={112}
-                className="opacity-35 blur-[0.5px]"
+                width={80}
+                height={80}
+                className="opacity-35 blur-[0.5px] sm:h-[112px] sm:w-[112px]"
               />
             </div>
           </div>
           <div
-            className="pointer-events-none absolute bottom-0 right-0 z-0 opacity-0 transition-opacity duration-200 group-hover/contact-card:opacity-100"
+            className="pointer-events-none absolute bottom-0 right-0 z-0 opacity-25 transition-opacity duration-200 group-hover/contact-card:opacity-100 group-focus-within/contact-card:opacity-100"
             aria-hidden
           >
-            <div className="pb-8 pr-4 sm:pb-10 sm:pr-6">
+            <div className="pb-6 pr-3 sm:pb-10 sm:pr-6">
               <SafeImage
                 src="/shad.png"
                 alt=""
                 fallbackLabel="shadcn/ui"
-                width={96}
-                height={96}
-                className="opacity-35 blur-[0.5px]"
+                width={72}
+                height={72}
+                className="opacity-35 blur-[0.5px] sm:h-24 sm:w-24"
               />
             </div>
           </div>
@@ -269,7 +207,7 @@ export default function PortfolioPage() {
         </section>
       </main>
 
-      <footer className="border-t border-border/60 bg-muted/15 py-10">
+      <footer className="border-t border-border/60 bg-muted/15 py-8 sm:py-10">
         <div className="grid gap-6 px-4 text-center sm:px-6 lg:grid-cols-3 lg:items-center lg:text-left">
           <div className="space-y-1 lg:justify-self-start">
             <p className="text-sm text-muted-foreground">
@@ -302,7 +240,7 @@ export default function PortfolioPage() {
               <span className="text-[11px] font-medium tracking-[0.18em] text-muted-foreground uppercase">
                 Local Time
               </span>
-              <span className="font-mono text-base font-semibold text-foreground sm:text-lg">
+              <span className="font-mono text-sm font-semibold text-foreground sm:text-base lg:text-lg">
                 <FooterTime />
               </span>
             </div>

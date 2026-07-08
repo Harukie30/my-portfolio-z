@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { AboutTechCarousel } from "@/components/about-tech-carousel";
 import { SafeImage } from "@/components/safe-image";
@@ -20,18 +20,34 @@ type HoverZone = "left" | "right" | null;
 
 export function PortfolioAboutSection() {
   const [hover, setHover] = useState<HoverZone>(null);
+  const [touchZone, setTouchZone] = useState<HoverZone>(null);
+  const activeHover = touchZone ?? hover;
+
+  useEffect(() => {
+    const clearTouch = () => setTouchZone(null);
+
+    window.addEventListener("pointerup", clearTouch);
+    window.addEventListener("pointercancel", clearTouch);
+
+    return () => {
+      window.removeEventListener("pointerup", clearTouch);
+      window.removeEventListener("pointercancel", clearTouch);
+    };
+  }, []);
 
   return (
     <section
       id="about"
-      className="relative scroll-mt-28 overflow-hidden border-b border-border/60 py-20 sm:py-28"
+      className="relative scroll-mt-28 overflow-hidden border-b border-border/60 py-14 sm:py-20 lg:py-28"
       aria-labelledby="about-heading"
+      onMouseLeave={() => setHover(null)}
     >
-      {/* Section-level positioning (same as before) — not clipped by the cards */}
+      {/* Decorative backgrounds — soft always-on mobile, full reveal on hover/touch */}
       <div
         className={cn(
-          "pointer-events-none absolute inset-y-0 left-0 z-0 hidden w-[44rem] -translate-x-24 items-center transition-opacity duration-300 md:flex",
-          hover === "left" ? "opacity-100" : "opacity-0"
+          "pointer-events-none absolute inset-y-0 left-0 z-0 flex items-center transition-opacity duration-300",
+          "w-[min(78vw,40rem)] -translate-x-10 sm:-translate-x-16 lg:w-[44rem] lg:-translate-x-24",
+          activeHover === "left" ? "opacity-100" : "opacity-25 md:opacity-0"
         )}
         aria-hidden
       >
@@ -47,18 +63,18 @@ export function PortfolioAboutSection() {
 
       <div
         className={cn(
-          "pointer-events-none absolute inset-y-1/4 right-0 z-0 hidden w-[min(36vw,22rem)] transition-opacity duration-300 lg:block",
-          hover === "right" ? "opacity-100" : "opacity-0"
+          "pointer-events-none absolute inset-y-1/4 right-0 z-0 w-[min(55vw,22rem)] transition-opacity duration-300",
+          activeHover === "right" ? "opacity-100" : "opacity-20 md:opacity-0"
         )}
         aria-hidden
       >
-        <div className="relative h-full min-h-[12rem] w-full overflow-hidden rounded-2xl opacity-50">
+        <div className="relative h-full min-h-[10rem] w-full overflow-hidden rounded-2xl opacity-50 sm:min-h-[12rem]">
           <SafeImage
             src="/hand.jpg"
             alt=""
             fallbackLabel="Profile"
             fill
-            sizes="(max-width: 1024px) 0px, 416px"
+            sizes="(max-width: 1024px) 55vw, 416px"
             className="object-cover object-right"
             style={{
               maskImage:
@@ -71,36 +87,44 @@ export function PortfolioAboutSection() {
       </div>
 
       <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="grid gap-12 lg:grid-cols-[1fr_1px_1fr] lg:gap-16">
+        <div className="grid gap-8 sm:gap-10 lg:grid-cols-[1fr_1px_1fr] lg:gap-16">
           <div
-            className="min-h-0"
+            className="min-h-0 touch-manipulation"
             onMouseEnter={() => setHover("left")}
             onMouseLeave={() => setHover(null)}
+            onPointerDown={() => setTouchZone("left")}
           >
-            <div className="space-y-5 rounded-2xl border border-border/60 bg-white p-6 shadow-sm sm:p-8 dark:bg-white">
+            <div className="space-y-4 rounded-2xl border border-border/60 bg-card p-5 shadow-sm sm:space-y-5 sm:p-8">
               <SectionLabel>About</SectionLabel>
               <h2
                 id="about-heading"
-                className="font-heading text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl"
+                className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl lg:text-4xl"
               >
                 Building with clarity
               </h2>
-              <p className="text-lg leading-relaxed text-slate-700">
-  I’m a front-end developer focused on building responsive and clean user interfaces using modern tools like Next.js, Tailwind CSS, and shadcn/ui. I enjoy turning ideas into functional UI while continuously improving my skills in design, usability, and code structure.
-</p>
+              <p className="text-base leading-relaxed text-muted-foreground sm:text-lg">
+                I’m a front-end developer focused on building responsive and
+                clean user interfaces using modern tools like Next.js, Tailwind
+                CSS, and shadcn/ui. I enjoy turning ideas into functional UI
+                while continuously improving my skills in design, usability, and
+                code structure.
+              </p>
             </div>
           </div>
+
           <Separator
             orientation="vertical"
             className="hidden bg-linear-to-b from-transparent via-border to-transparent lg:block"
           />
           <Separator className="lg:hidden" />
+
           <div
-            className="min-h-0"
+            className="min-h-0 touch-manipulation"
             onMouseEnter={() => setHover("right")}
             onMouseLeave={() => setHover(null)}
+            onPointerDown={() => setTouchZone("right")}
           >
-            <div className="flex flex-col justify-center gap-5 -ml-3 sm:-ml-6">
+            <div className="flex flex-col justify-center gap-4 rounded-2xl border border-border/60 bg-muted/20 p-5 sm:gap-5 sm:p-8">
               <h3 className="text-sm font-semibold tracking-tight">
                 Stack &amp; focus
               </h3>

@@ -66,9 +66,9 @@ export function AboutTechCarousel({ skills }: Props) {
   if (!activeSkill) return null;
 
   return (
-    <div className="mr-auto w-full max-w-[18rem] space-y-4 sm:max-w-[20rem]">
+    <div className="mx-auto w-full max-w-[16rem] space-y-4 sm:mx-0 sm:max-w-[20rem]">
       <div
-        className="relative h-32 overflow-hidden sm:h-40"
+        className="relative h-28 overflow-hidden sm:h-40"
         role="region"
         aria-label="Tech stack carousel"
         aria-live="polite"
@@ -76,20 +76,20 @@ export function AboutTechCarousel({ skills }: Props) {
         <div
           key={current}
           className={cn(
-            "absolute inset-0 flex items-center justify-center px-2 py-4",
+            "absolute inset-0 flex items-center justify-center px-2 py-3 sm:py-4",
             "animate-in fade-in duration-500 ease-out fill-mode-both",
             direction === "forward"
               ? "slide-in-from-right-10"
               : "slide-in-from-left-10"
           )}
         >
-          <div className="relative h-full w-full max-w-[200px] sm:max-w-[240px]">
+          <div className="relative h-full w-full max-w-[160px] sm:max-w-[240px]">
             <SafeImage
               src={activeSkill.image}
               alt={activeSkill.name}
               fallbackLabel={activeSkill.name}
               fill
-              sizes="(max-width: 640px) 200px, 240px"
+              sizes="(max-width: 640px) 160px, 240px"
               className="object-contain"
               unoptimized={activeSkill.image.endsWith(".svg")}
               priority
@@ -101,7 +101,7 @@ export function AboutTechCarousel({ skills }: Props) {
       <p
         key={activeSkill.name}
         className={cn(
-          "text-left text-sm font-medium text-foreground",
+          "text-center text-sm font-medium text-foreground sm:text-left",
           "animate-in fade-in duration-300 fill-mode-both",
           direction === "forward"
             ? "slide-in-from-right-4"
@@ -112,7 +112,7 @@ export function AboutTechCarousel({ skills }: Props) {
       </p>
 
       <div
-        className="flex justify-start gap-1.5"
+        className="flex justify-center gap-1.5 sm:justify-start"
         role="tablist"
         aria-label="Tech stack slides"
       >

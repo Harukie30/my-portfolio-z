@@ -71,7 +71,7 @@ export function PortfolioProjects() {
 
   return (
     <>
-      <div className="grid gap-6 overflow-visible px-1 md:grid-cols-2 md:px-0 md:pl-40 lg:grid-cols-3">
+      <div className="grid gap-5 overflow-visible px-0 sm:gap-6 md:grid-cols-2 md:pl-40 lg:grid-cols-3">
         {site.projects.map((project) => {
           const isHovered = hoveredProject === project.title;
 
@@ -88,10 +88,10 @@ export function PortfolioProjects() {
               }
             }}
           >
-            {/* Preview slides out to the left of the card on hover */}
+            {/* Desktop only: preview slides out to the left of the card on hover */}
             <div
               className={cn(
-                "pointer-events-none absolute top-1/2 right-full z-20 mr-2 w-0 -translate-y-1/2 overflow-hidden rounded-xl border border-border/50 bg-muted/40 shadow-[0_18px_44px_-14px_oklch(0_0_0/0.4)] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] dark:shadow-[0_18px_44px_-14px_oklch(0_0_0/0.55)]",
+                "pointer-events-none absolute top-1/2 right-full z-20 mr-2 hidden w-0 -translate-y-1/2 overflow-hidden rounded-xl border border-border/50 bg-muted/40 shadow-[0_18px_44px_-14px_oklch(0_0_0/0.4)] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] md:block dark:shadow-[0_18px_44px_-14px_oklch(0_0_0/0.55)]",
                 isHovered && "w-36"
               )}
             >
@@ -118,12 +118,23 @@ export function PortfolioProjects() {
                 }
               }}
               className={cn(
-                "relative cursor-pointer overflow-visible border-border/60 bg-card/80 transition-all duration-300",
+                "relative cursor-pointer overflow-hidden border-border/60 bg-card/80 transition-all duration-300",
                 "hover:-translate-y-1 hover:border-border hover:shadow-[0_20px_50px_-20px_oklch(0_0_0/0.2)]",
                 "dark:hover:shadow-[0_20px_50px_-20px_oklch(0_0_0/0.45)]",
                 "focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
               )}
             >
+              {/* Mobile: show preview in-card (side hover preview is desktop-only) */}
+              <div className="relative aspect-[16/10] w-full border-b border-border/50 bg-muted/30 p-4 md:hidden">
+                <SafeImage
+                  src={projectThumbSrc(project)}
+                  alt=""
+                  fallbackLabel={project.title}
+                  fill
+                  sizes="100vw"
+                  className="object-contain object-center p-3"
+                />
+              </div>
               <CardHeader className="gap-4">
                 <div className="flex flex-wrap gap-2">
                   {project.tags.map((t) => (
