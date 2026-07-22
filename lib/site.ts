@@ -11,6 +11,8 @@ export const site = {
   /** Hero avatar: put your photo in `/public` (square ~800px is ideal). Use `""` for initials only. */
   portraitImage: "/amadeus mozart.jpg",
   availableForFreelance: true,
+  /** Live demos live here — Selected work cards CTA to this portal. */
+  portalUrl: "https://zart-portal.vercel.app/",
   /** Short list under Selected work — what clients can hire you for. */
   services: [
     {
@@ -38,65 +40,41 @@ export const site = {
     { name: "Tailwind CSS", image: "/tailwind.png" },
     { name: "shadcn/ui", image: "/shad.png" },
   ],
+  /**
+   * Case notes on this site. Live demos open via `portalUrl`.
+   */
   projects: [
     {
-      title: "UI Components Showcase",
-      /** Name shown in the Live projects modal (not the card title). */
-      liveName: "Component Gallery",
-      /** Thumbnail in the Live projects modal. */
-      liveIcon: "/UI1.png",
+      title: "Ellen’s Bakery",
       description:
-        "A growing library of reusable UI patterns built with Next.js, Tailwind CSS, and shadcn/ui — focused on consistent spacing, accessible defaults, and clean composition.",
-      outcome: "Reusable UI patterns with accessible, consistent defaults.",
-      /** Deployed live URL — shown in the shared Live projects modal. */
-      href: "https://harukie30.github.io/UI-Components-Showcase/",
-      previewImage: "/shad.png",
-      carouselImages: [
-        "/UI1.png",
-        "/UI2.png",
-        "/UI3.png",
-        "/UI4.png",
-        "/UI5.png",
-        "/UI6.png",
-        "/UI7.png",
-        "/UI8.png",
-        "/reggg.png",
-        "/modal.png",
-      ],
-      tags: ["Next.js", "Tailwind", "shadcn/ui"],
+        "A bakery website showcasing cakes and pastries with a warm, product-first layout.",
+      outcome: "Bakery site with clear product presentation.",
+      previewImage: "/pops.png",
+      tags: ["Next.js", "Tailwind", "Marketing"],
     },
     {
-      title: "Performance Evaluation Dashboard",
-      /** Name shown in the Live projects modal (not the card title). */
-      liveName: "HR Eval System",
-      /** Thumbnail in the Live projects modal. */
-      liveIcon: "/emppp.png",
+      title: "Barber Salon",
       description:
-        "An HR performance evaluation system with role-based views for employees, evaluators, and HR — focused on clean layouts, smooth flows, and clear feedback.",
-      outcome: "Role-based HR views for employees, evaluators, and HR.",
-      /** Deployed live URL — shown in the shared Live projects modal. */
-      href: "#",
-      previewImage: "/React.png",
-      carouselImages: [
-        "/emppp.png",
-        "/evall.png",
-        "/HR.png",
-      ],
-      tags: ["React", "Tailwind", "HR System"],
+        "A barber salon site with booking flow and blog content — built for easy browsing and conversions.",
+      outcome: "Salon site with booking and content.",
+      previewImage: "/UI5.png",
+      tags: ["React", "Tailwind", "Booking"],
     },
     {
-      title: "Landing Page UI",
-      /** Name shown in the Live projects modal (not the card title). */
-      liveName: "Marketing Landing",
-      /** Thumbnail in the Live projects modal. */
-      liveIcon: "/pops.png",
+      title: "CueSing",
       description:
-        "A responsive marketing landing page with a clear hero, optimized imagery, and a smooth scroll experience — built with performance and readability in mind.",
-      outcome: "Responsive marketing page with a clear hero and smooth scroll.",
-      /** Deployed live URL — shown in the shared Live projects modal. */
-      href: "#",
-      previewImage: "/tailwind.png",
-      tags: ["Next.js", "Tailwind"],
+        "A karaoke experience with a song library — focused on playful UI and fast browsing.",
+      outcome: "Karaoke UI with song library browsing.",
+      previewImage: "/UI1.png",
+      tags: ["Next.js", "Tailwind", "Interactive"],
+    },
+    {
+      title: "Studio Zero",
+      description:
+        "A karaoke-style product surface with a song library and a clean, modern interface.",
+      outcome: "Interactive karaoke site experience.",
+      previewImage: "/codeee.png",
+      tags: ["Next.js", "Tailwind", "Interactive"],
     },
   ],
 } as const;

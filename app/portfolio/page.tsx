@@ -158,9 +158,8 @@ export default function PortfolioPage() {
                 Selected work
               </h2>
               <p className="text-base text-muted-foreground leading-relaxed sm:text-lg">
-                Front-end projects built with Next.js, Tailwind CSS, and
-                shadcn/ui — focused on clear UI, responsive layouts, and code
-                you can maintain.
+                Case notes from recent builds. Live demos live in the portal —
+                this page is for craft, scope, and freelance fit.
               </p>
               {site.availableForFreelance ? (
                 <p className="text-sm font-medium text-foreground/90">
@@ -168,6 +167,8 @@ export default function PortfolioPage() {
                 </p>
               ) : null}
             </div>
+
+            <PortfolioProjects />
 
             <div className="max-w-3xl space-y-4">
               <SectionLabel>What I take on</SectionLabel>
@@ -185,12 +186,10 @@ export default function PortfolioPage() {
               </ul>
             </div>
 
-            <PortfolioProjects />
-
             <div className="flex flex-col gap-3 border-t border-border/60 pt-8 sm:flex-row sm:items-center sm:justify-between sm:pt-10">
               <p className="max-w-md text-sm text-muted-foreground leading-relaxed sm:text-base">
-                Need a landing page, dashboard, or UI system? I&apos;m available
-                for freelance work.
+                Need something built? I&apos;m available for freelance frontend
+                work.
               </p>
               <Button
                 size="lg"
