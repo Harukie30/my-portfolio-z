@@ -10,9 +10,25 @@ export const site = {
   location: "Philippines",
   /** Hero avatar: put your photo in `/public` (square ~800px is ideal). Use `""` for initials only. */
   portraitImage: "/amadeus mozart.jpg",
+  availableForFreelance: true,
+  /** Short list under Selected work — what clients can hire you for. */
+  services: [
+    {
+      title: "Landing & marketing pages",
+      detail: "Clear heroes, responsive layouts, and smooth scroll experiences.",
+    },
+    {
+      title: "Dashboards & admin UIs",
+      detail: "Role-based views, clean tables, and flows that stay easy to use.",
+    },
+    {
+      title: "UI systems & components",
+      detail: "Reusable patterns with Next.js, Tailwind, and shadcn/ui.",
+    },
+  ],
   social: {
     github: "https://github.com/Harukie30",
-    linkedin: "https://linkedin.com",
+    linkedin: "in/amadeus-mozart-labao-5829a241b",
   },
   /** Tech stack: add matching files under `/public` or swap paths. */
   skills: [
@@ -25,15 +41,14 @@ export const site = {
   projects: [
     {
       title: "UI Components Showcase",
+      /** Name shown in the Live projects modal (not the card title). */
+      liveName: "Component Gallery",
       description:
         "A growing library of reusable UI patterns built with Next.js, Tailwind CSS, and shadcn/ui — focused on consistent spacing, accessible defaults, and clean composition.",
-      href: "#",
-      /** Fallback + hover peek when using carouselImages below. */
+      outcome: "Reusable UI patterns with accessible, consistent defaults.",
+      /** Deployed live URL — shown in the shared Live projects modal. */
+      href: "https://harukie30.github.io/UI-Components-Showcase/",
       previewImage: "/shad.png",
-      /**
-       * Only this project: multiple images in the modal carousel.
-       * Swap paths for your own files under /public.
-       */
       carouselImages: [
         "/UI1.png",
         "/UI2.png",
@@ -50,8 +65,12 @@ export const site = {
     },
     {
       title: "Performance Evaluation Dashboard",
+      /** Name shown in the Live projects modal (not the card title). */
+      liveName: "HR Eval System",
       description:
         "An HR performance evaluation system with role-based views for employees, evaluators, and HR — focused on clean layouts, smooth flows, and clear feedback.",
+      outcome: "Role-based HR views for employees, evaluators, and HR.",
+      /** Deployed live URL — shown in the shared Live projects modal. */
       href: "#",
       previewImage: "/React.png",
       carouselImages: [
@@ -63,8 +82,12 @@ export const site = {
     },
     {
       title: "Landing Page UI",
+      /** Name shown in the Live projects modal (not the card title). */
+      liveName: "Marketing Landing",
       description:
         "A responsive marketing landing page with a clear hero, optimized imagery, and a smooth scroll experience — built with performance and readability in mind.",
+      outcome: "Responsive marketing page with a clear hero and smooth scroll.",
+      /** Deployed live URL — shown in the shared Live projects modal. */
       href: "#",
       previewImage: "/tailwind.png",
       tags: ["Next.js", "Tailwind"],

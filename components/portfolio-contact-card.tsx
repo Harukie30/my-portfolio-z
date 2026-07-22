@@ -90,8 +90,9 @@ export function PortfolioContactCard() {
             Let&apos;s work together
           </h2>
           <p className="text-lg text-muted-foreground leading-relaxed">
-            Open to freelance and full-time roles. Send a short note with what
-            you&apos;re building I&apos;ll reply within a few days.
+            Open for freelance frontend work — landings, dashboards, and UI
+            systems. Send a short note about what you&apos;re building and
+            I&apos;ll reply within a few days.
           </p>
         </div>
         <div

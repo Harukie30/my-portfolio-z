@@ -1,7 +1,7 @@
 "use client";
 
-import { useCallback, useState, type ReactNode } from "react";
-import { ArrowUpRight } from "lucide-react";
+import { useState } from "react";
+import { ArrowUpRight, ExternalLink } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { SafeImage } from "@/components/safe-image";
@@ -15,59 +15,32 @@ import {
 } from "@/components/ui/card";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
 import type { ProjectEntry } from "@/lib/site";
 import { site } from "@/lib/site";
 import { cn } from "@/lib/utils";
-
-function projectHasCarousel(
-  project: ProjectEntry
-): project is ProjectEntry & { carouselImages: readonly string[] } {
-  return (
-    "carouselImages" in project &&
-    Array.isArray(project.carouselImages) &&
-    project.carouselImages.length > 0
-  );
-}
 
 function projectThumbSrc(project: ProjectEntry): string {
   return project.previewImage;
 }
 
-function ModalSectionLabel({ children }: { children: ReactNode }) {
-  return (
-    <p className="font-mono text-[11px] font-medium tracking-[0.2em] text-muted-foreground uppercase">
-      {children}
-    </p>
-  );
+function hasLiveHref(href: string) {
+  return Boolean(href && href !== "#");
 }
 
 export function PortfolioProjects() {
-  const [active, setActive] = useState<ProjectEntry | null>(null);
+  const [open, setOpen] = useState(false);
+  const [focusedTitle, setFocusedTitle] = useState<string | null>(null);
   const [hoveredProject, setHoveredProject] = useState<string | null>(null);
 
-  const open = useCallback((project: ProjectEntry) => {
-    setActive(project);
-  }, []);
-
-  const close = useCallback(() => {
-    setActive(null);
-  }, []);
-
-  const hasLiveLink = active?.href && active.href !== "#";
+  const openLinksModal = (project?: ProjectEntry) => {
+    setFocusedTitle(project?.title ?? null);
+    setOpen(true);
+  };
 
   return (
     <>
@@ -76,235 +49,177 @@ export function PortfolioProjects() {
           const isHovered = hoveredProject === project.title;
 
           return (
-          <div
-            key={project.title}
-            className="relative overflow-visible hover:z-20 focus-within:z-20"
-            onMouseEnter={() => setHoveredProject(project.title)}
-            onMouseLeave={() => setHoveredProject(null)}
-            onFocusCapture={() => setHoveredProject(project.title)}
-            onBlurCapture={(e) => {
-              if (!e.currentTarget.contains(e.relatedTarget as Node)) {
-                setHoveredProject(null);
-              }
-            }}
-          >
-            {/* Desktop only: preview slides out to the left of the card on hover */}
             <div
-              className={cn(
-                "pointer-events-none absolute top-1/2 right-full z-20 mr-2 hidden w-0 -translate-y-1/2 overflow-hidden rounded-xl border border-border/50 bg-muted/40 shadow-[0_18px_44px_-14px_oklch(0_0_0/0.4)] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] md:block dark:shadow-[0_18px_44px_-14px_oklch(0_0_0/0.55)]",
-                isHovered && "w-36"
-              )}
-            >
-              <div className="relative h-44 w-36 shrink-0 bg-muted/30 p-2 sm:h-48">
-                <SafeImage
-                  src={projectThumbSrc(project)}
-                  alt=""
-                  fallbackLabel={project.title}
-                  fill
-                  sizes="144px"
-                  className="object-contain object-left"
-                />
-              </div>
-            </div>
-
-            <Card
-              role="button"
-              tabIndex={0}
-              onClick={() => open(project)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  e.preventDefault();
-                  open(project);
+              key={project.title}
+              className="relative overflow-visible hover:z-20 focus-within:z-20"
+              onMouseEnter={() => setHoveredProject(project.title)}
+              onMouseLeave={() => setHoveredProject(null)}
+              onFocusCapture={() => setHoveredProject(project.title)}
+              onBlurCapture={(e) => {
+                if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+                  setHoveredProject(null);
                 }
               }}
-              className={cn(
-                "relative cursor-pointer overflow-hidden border-border/60 bg-card/80 transition-all duration-300",
-                "hover:-translate-y-1 hover:border-border hover:shadow-[0_20px_50px_-20px_oklch(0_0_0/0.2)]",
-                "dark:hover:shadow-[0_20px_50px_-20px_oklch(0_0_0/0.45)]",
-                "focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
-              )}
             >
-              {/* Mobile: show preview in-card (side hover preview is desktop-only) */}
-              <div className="relative aspect-[16/10] w-full border-b border-border/50 bg-muted/30 p-4 md:hidden">
-                <SafeImage
-                  src={projectThumbSrc(project)}
-                  alt=""
-                  fallbackLabel={project.title}
-                  fill
-                  sizes="100vw"
-                  className="object-contain object-center p-3"
-                />
-              </div>
-              <CardHeader className="gap-4">
-                <div className="flex flex-wrap gap-2">
-                  {project.tags.map((t) => (
-                    <Badge
-                      key={t}
-                      variant="outline"
-                      className="rounded-full font-normal"
-                    >
-                      {t}
-                    </Badge>
-                  ))}
-                </div>
-                <CardTitle
-                  className={cn(
-                    "text-lg transition-colors",
-                    isHovered && "text-foreground"
-                  )}
-                >
-                  {project.title}
-                </CardTitle>
-                <CardDescription className="text-base leading-relaxed">
-                  {project.description}
-                </CardDescription>
-              </CardHeader>
-              <CardFooter className="border-border/60 bg-muted/20">
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="sm"
-                  className="gap-1.5 px-0 text-muted-foreground hover:text-foreground"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    open(project);
-                  }}
-                >
-                  View details
-                  <ArrowUpRight
-                    className={cn(
-                      "size-3.5 transition-transform",
-                      isHovered && "translate-x-0.5 -translate-y-0.5"
-                    )}
-                    aria-hidden
-                  />
-                </Button>
-              </CardFooter>
-            </Card>
-          </div>
-          );
-        })}
-      </div>
-
-      <Dialog open={active !== null} onOpenChange={(o) => !o && close()}>
-        <DialogContent
-          className={cn(
-            "flex max-h-[min(92vh,44rem)] w-full max-w-[calc(100%-2rem)] flex-col gap-0 overflow-hidden rounded-2xl border-0 p-0 shadow-2xl",
-            "ring-1 ring-border/80 bg-popover",
-            "sm:max-w-2xl md:max-w-3xl"
-          )}
-          showCloseButton
-        >
-          {active ? (
-            <>
+              {/* Desktop only: preview slides out to the left of the card on hover */}
               <div
-                className="h-1 w-full shrink-0 bg-gradient-to-r from-primary/25 via-primary/60 to-primary/25"
-                aria-hidden
-              />
-              <div className="flex min-h-0 flex-1 flex-col">
-                <DialogHeader className="gap-4 space-y-0 px-6 pt-6 pb-2 pr-14 text-left sm:px-8 sm:pt-8">
-                  <div className="space-y-3">
-                    <ModalSectionLabel>Project</ModalSectionLabel>
-                    <DialogTitle className="font-heading text-balance text-2xl font-semibold leading-tight tracking-tight sm:text-[1.75rem]">
-                      {active.title}
-                    </DialogTitle>
-                  </div>
+                className={cn(
+                  "pointer-events-none absolute top-1/2 right-full z-20 mr-2 hidden w-0 -translate-y-1/2 overflow-hidden rounded-xl border border-border/50 bg-muted/40 shadow-[0_18px_44px_-14px_oklch(0_0_0/0.4)] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] md:block dark:shadow-[0_18px_44px_-14px_oklch(0_0_0/0.55)]",
+                  isHovered && "w-36"
+                )}
+              >
+                <div className="relative h-44 w-36 shrink-0 bg-muted/30 p-2 sm:h-48">
+                  <SafeImage
+                    src={projectThumbSrc(project)}
+                    alt=""
+                    fallbackLabel={project.title}
+                    fill
+                    sizes="144px"
+                    className="object-contain object-left"
+                  />
+                </div>
+              </div>
+
+              <Card
+                role="button"
+                tabIndex={0}
+                onClick={() => openLinksModal(project)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    openLinksModal(project);
+                  }
+                }}
+                className={cn(
+                  "relative cursor-pointer overflow-hidden border-border/60 bg-card/80 transition-all duration-300",
+                  "hover:-translate-y-1 hover:border-border hover:shadow-[0_20px_50px_-20px_oklch(0_0_0/0.2)]",
+                  "dark:hover:shadow-[0_20px_50px_-20px_oklch(0_0_0/0.45)]",
+                  "focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+                )}
+              >
+                <div className="relative aspect-[16/10] w-full border-b border-border/50 bg-muted/30 p-4 md:hidden">
+                  <SafeImage
+                    src={projectThumbSrc(project)}
+                    alt=""
+                    fallbackLabel={project.title}
+                    fill
+                    sizes="100vw"
+                    className="object-contain object-center p-3"
+                  />
+                </div>
+                <CardHeader className="gap-4">
                   <div className="flex flex-wrap gap-2">
-                    {active.tags.map((t) => (
+                    {project.tags.map((t) => (
                       <Badge
                         key={t}
-                        variant="secondary"
-                        className="rounded-full border border-border/60 bg-background/80 px-2.5 py-0.5 font-normal backdrop-blur-sm"
+                        variant="outline"
+                        className="rounded-full font-normal"
                       >
                         {t}
                       </Badge>
                     ))}
                   </div>
-                </DialogHeader>
+                  <CardTitle
+                    className={cn(
+                      "text-lg transition-colors",
+                      isHovered && "text-foreground"
+                    )}
+                  >
+                    {project.title}
+                  </CardTitle>
+                  <CardDescription className="text-base leading-relaxed">
+                    {project.description}
+                  </CardDescription>
+                </CardHeader>
+                <CardFooter className="border-border/60 bg-muted/20">
+                  <span
+                    className={cn(
+                      "inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors",
+                      isHovered && "text-foreground"
+                    )}
+                  >
+                    View live links
+                    <ArrowUpRight
+                      className={cn(
+                        "size-3.5 transition-transform",
+                        isHovered && "translate-x-0.5 -translate-y-0.5"
+                      )}
+                      aria-hidden
+                    />
+                  </span>
+                </CardFooter>
+              </Card>
+            </div>
+          );
+        })}
+      </div>
 
-                <div className="space-y-2 px-6 sm:px-8">
-                  <ModalSectionLabel>Overview</ModalSectionLabel>
-                  <DialogDescription className="text-base leading-relaxed text-pretty text-foreground/85">
-                    {active.description}
-                  </DialogDescription>
-                </div>
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent
+          className="w-full max-w-[calc(100%-2rem)] gap-0 overflow-hidden p-0 sm:max-w-md"
+          showCloseButton
+        >
+          <DialogHeader className="gap-2 space-y-0 border-b border-border/60 px-6 py-5 pr-12 text-left sm:px-7">
+            <DialogTitle className="font-heading text-xl font-semibold tracking-tight">
+              Live projects
+            </DialogTitle>
+            <DialogDescription className="text-sm leading-relaxed">
+              Deployed links for the selected work. Open any project in a new
+              tab.
+            </DialogDescription>
+          </DialogHeader>
 
-                <div className="px-6 pt-4 pb-2 sm:px-8">
-                  {projectHasCarousel(active) ? (
-                    <div className="relative w-full">
-                      <Carousel
-                        opts={{ loop: true, align: "center" }}
-                        className="w-full"
-                        aria-label="Project screenshots"
-                      >
-                        <CarouselContent>
-                          {active.carouselImages.map((src) => (
-                            <CarouselItem key={src}>
-                              <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-border/50 bg-muted/40 p-4 sm:p-6">
-                                <SafeImage
-                                  src={src}
-                                  alt=""
-                                  fallbackLabel={active.title}
-                                  fill
-                                  className="object-contain object-center"
-                                  sizes="(max-width: 768px) 100vw, 42rem"
-                                />
-                              </div>
-                            </CarouselItem>
-                          ))}
-                        </CarouselContent>
-                        <CarouselPrevious
-                          variant="outline"
-                          size="icon-sm"
-                          className="left-1 top-1/2 z-10 -translate-y-1/2 border-border/80 bg-background/90 shadow-sm"
-                        />
-                        <CarouselNext
-                          variant="outline"
-                          size="icon-sm"
-                          className="right-1 top-1/2 z-10 -translate-y-1/2 border-border/80 bg-background/90 shadow-sm"
-                        />
-                      </Carousel>
+          <ul className="divide-y divide-border/60 px-2 py-2 sm:px-3">
+            {site.projects.map((project) => {
+              const live = hasLiveHref(project.href);
+              const isFocused = focusedTitle === project.title;
+
+              return (
+                <li key={project.title}>
+                  <div
+                    className={cn(
+                      "flex items-center gap-3 rounded-xl px-3 py-3 transition-colors",
+                      isFocused && "bg-muted/50"
+                    )}
+                  >
+                    <div className="min-w-0 flex-1">
+                      <p className="truncate text-sm font-medium text-foreground">
+                        {project.liveName}
+                      </p>
+                      <p className="line-clamp-2 text-xs leading-relaxed text-muted-foreground">
+                        {project.outcome}
+                      </p>
                     </div>
-                  ) : (
-                    <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-border/50 bg-muted/40 p-4 sm:p-6">
-                      <SafeImage
-                        src={active.previewImage}
-                        alt=""
-                        fallbackLabel={active.title}
-                        fill
-                        className="object-contain object-center"
-                        sizes="(max-width: 768px) 100vw, 42rem"
-                      />
-                    </div>
-                  )}
-                </div>
-
-                <DialogFooter className="mx-0 mb-0 mt-auto flex-row flex-wrap gap-2 border-t border-border/60 bg-muted/20 px-6 py-4 sm:justify-end sm:px-8">
-                  <DialogClose asChild>
-                    <Button
-                      type="button"
-                      variant="outline"
-                      className="rounded-full border-border/80"
-                    >
-                      Close
-                    </Button>
-                  </DialogClose>
-                  {hasLiveLink ? (
-                    <Button className="rounded-full gap-1.5" asChild>
-                      <a
-                        href={active!.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                    {live ? (
+                      <Button
+                        size="sm"
+                        className="shrink-0 gap-1.5 rounded-full"
+                        asChild
                       >
-                        Visit project
-                        <ArrowUpRight className="size-4" aria-hidden />
-                      </a>
-                    </Button>
-                  ) : null}
-                </DialogFooter>
-              </div>
-            </>
-          ) : null}
+                        <a
+                          href={project.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Open
+                          <ExternalLink className="size-3.5" aria-hidden />
+                        </a>
+                      </Button>
+                    ) : (
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="shrink-0 rounded-full"
+                        disabled
+                      >
+                        Soon
+                      </Button>
+                    )}
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
         </DialogContent>
       </Dialog>
     </>

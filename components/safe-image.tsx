@@ -85,10 +85,20 @@ export function SafeImage({
       {...props}
       src={src}
       alt={alt}
-      className={className}
+      draggable={false}
+      loading={props.priority ? undefined : props.loading ?? "lazy"}
+      className={cn("select-none [-webkit-user-drag:none]", className)}
       style={{
         ...props.style,
         ...(hasFixedDimensions ? { width: "auto", height: "auto" } : {}),
+      }}
+      onContextMenu={(event) => {
+        event.preventDefault();
+        props.onContextMenu?.(event);
+      }}
+      onDragStart={(event) => {
+        event.preventDefault();
+        props.onDragStart?.(event);
       }}
       onError={(event) => {
         setFailed(true);

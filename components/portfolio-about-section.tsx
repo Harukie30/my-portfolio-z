@@ -124,7 +124,7 @@ export function PortfolioAboutSection() {
             onMouseLeave={() => setHover(null)}
             onPointerDown={() => setTouchZone("right")}
           >
-            <div className="flex flex-col justify-center gap-4 rounded-2xl border border-border/60 bg-muted/20 p-5 sm:gap-5 sm:p-8">
+            <div className="flex -translate-x-3 flex-col items-center justify-center gap-4 text-center sm:-translate-x-5 sm:gap-5">
               <h3 className="text-sm font-semibold tracking-tight">
                 Stack &amp; focus
               </h3>

@@ -78,7 +78,11 @@ export default function PortfolioPage() {
               </div>
               <div className="space-y-5 sm:space-y-6">
                 <div className="space-y-2">
-                  <SectionLabel>Available for work</SectionLabel>
+                  <SectionLabel>
+                    {site.availableForFreelance
+                      ? "Open for freelance"
+                      : "Available for work"}
+                  </SectionLabel>
                   <p className="text-sm font-medium text-muted-foreground">
                     {site.role}
                   </p>
@@ -154,11 +158,48 @@ export default function PortfolioPage() {
                 Selected work
               </h2>
               <p className="text-base text-muted-foreground leading-relaxed sm:text-lg">
-                A collection of front-end projects built with Next.js, Tailwind CSS, and shadcn/ui
-                focused on responsive design, clean user experience, and maintainable modern code.
+                Front-end projects built with Next.js, Tailwind CSS, and
+                shadcn/ui — focused on clear UI, responsive layouts, and code
+                you can maintain.
               </p>
+              {site.availableForFreelance ? (
+                <p className="text-sm font-medium text-foreground/90">
+                  Open for freelance · Next.js / React UI
+                </p>
+              ) : null}
             </div>
+
+            <div className="max-w-3xl space-y-4">
+              <SectionLabel>What I take on</SectionLabel>
+              <ul className="grid gap-4 sm:grid-cols-3 sm:gap-6">
+                {site.services.map((service) => (
+                  <li key={service.title} className="space-y-1.5">
+                    <p className="text-sm font-semibold tracking-tight text-foreground">
+                      {service.title}
+                    </p>
+                    <p className="text-sm leading-relaxed text-muted-foreground">
+                      {service.detail}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
             <PortfolioProjects />
+
+            <div className="flex flex-col gap-3 border-t border-border/60 pt-8 sm:flex-row sm:items-center sm:justify-between sm:pt-10">
+              <p className="max-w-md text-sm text-muted-foreground leading-relaxed sm:text-base">
+                Need a landing page, dashboard, or UI system? I&apos;m available
+                for freelance work.
+              </p>
+              <Button
+                size="lg"
+                className="w-full shrink-0 rounded-full px-7 shadow-sm sm:w-auto"
+                asChild
+              >
+                <a href="#contact">Let&apos;s talk</a>
+              </Button>
+            </div>
           </div>
         </section>
 
