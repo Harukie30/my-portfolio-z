@@ -28,6 +28,10 @@ function projectThumbSrc(project: ProjectEntry): string {
   return project.previewImage;
 }
 
+function projectLiveIcon(project: ProjectEntry): string {
+  return project.liveIcon;
+}
+
 function hasLiveHref(href: string) {
   return Boolean(href && href !== "#");
 }
@@ -42,11 +46,20 @@ export function PortfolioProjects() {
     setOpen(true);
   };
 
+  const handleCardActivate = (project: ProjectEntry) => {
+    if (hasLiveHref(project.href)) {
+      window.open(project.href, "_blank", "noopener,noreferrer");
+      return;
+    }
+    openLinksModal(project);
+  };
+
   return (
     <>
       <div className="grid gap-5 overflow-visible px-0 sm:gap-6 md:grid-cols-2 md:pl-40 lg:grid-cols-3">
         {site.projects.map((project) => {
           const isHovered = hoveredProject === project.title;
+          const live = hasLiveHref(project.href);
 
           return (
             <div
@@ -83,11 +96,11 @@ export function PortfolioProjects() {
               <Card
                 role="button"
                 tabIndex={0}
-                onClick={() => openLinksModal(project)}
+                onClick={() => handleCardActivate(project)}
                 onKeyDown={(e) => {
                   if (e.key === "Enter" || e.key === " ") {
                     e.preventDefault();
-                    openLinksModal(project);
+                    handleCardActivate(project);
                   }
                 }}
                 className={cn(
@@ -138,7 +151,7 @@ export function PortfolioProjects() {
                       isHovered && "text-foreground"
                     )}
                   >
-                    View live links
+                    {live ? "Open live project" : "View live links"}
                     <ArrowUpRight
                       className={cn(
                         "size-3.5 transition-transform",
@@ -182,6 +195,16 @@ export function PortfolioProjects() {
                       isFocused && "bg-muted/50"
                     )}
                   >
+                    <div className="relative size-11 shrink-0 overflow-hidden rounded-lg border border-border/50 bg-muted/40">
+                      <SafeImage
+                        src={projectLiveIcon(project)}
+                        alt=""
+                        fallbackLabel={project.liveName}
+                        fill
+                        sizes="44px"
+                        className="object-cover"
+                      />
+                    </div>
                     <div className="min-w-0 flex-1">
                       <p className="truncate text-sm font-medium text-foreground">
                         {project.liveName}

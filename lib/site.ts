@@ -43,6 +43,8 @@ export const site = {
       title: "UI Components Showcase",
       /** Name shown in the Live projects modal (not the card title). */
       liveName: "Component Gallery",
+      /** Thumbnail in the Live projects modal. */
+      liveIcon: "/UI1.png",
       description:
         "A growing library of reusable UI patterns built with Next.js, Tailwind CSS, and shadcn/ui — focused on consistent spacing, accessible defaults, and clean composition.",
       outcome: "Reusable UI patterns with accessible, consistent defaults.",
@@ -67,6 +69,8 @@ export const site = {
       title: "Performance Evaluation Dashboard",
       /** Name shown in the Live projects modal (not the card title). */
       liveName: "HR Eval System",
+      /** Thumbnail in the Live projects modal. */
+      liveIcon: "/emppp.png",
       description:
         "An HR performance evaluation system with role-based views for employees, evaluators, and HR — focused on clean layouts, smooth flows, and clear feedback.",
       outcome: "Role-based HR views for employees, evaluators, and HR.",
@@ -84,6 +88,8 @@ export const site = {
       title: "Landing Page UI",
       /** Name shown in the Live projects modal (not the card title). */
       liveName: "Marketing Landing",
+      /** Thumbnail in the Live projects modal. */
+      liveIcon: "/pops.png",
       description:
         "A responsive marketing landing page with a clear hero, optimized imagery, and a smooth scroll experience — built with performance and readability in mind.",
       outcome: "Responsive marketing page with a clear hero and smooth scroll.",
